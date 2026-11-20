@@ -1,0 +1,91 @@
+/* =====================================================================
+   HALO DESIGN TOKENS
+   One file, two themes. Every colour is written once with light-dark(),
+   so a page follows the OS theme and can be forced with
+   <html data-theme="light|dark">.
+   Rule: light-dark() only takes COLOURS. Never put gradients or shadows
+   inside it; build those from the colour tokens (see --cA/--cB etc).
+   ===================================================================== */
+:root{
+  color-scheme:light dark;
+
+  /* ---- surfaces ---- */
+  --bg:     light-dark(#F5F5F7,#000000);   /* page */
+  --bg2:    light-dark(#FFFFFF,#0B0B0D);   /* inputs, wells */
+  --card:   light-dark(#FFFFFF,#151518);   /* flat card */
+  --card2:  light-dark(#FFFFFF,#0E0E10);   /* sheets / dialogs */
+  --cA:     light-dark(#FFFFFF,#1A1A1E);   /* card gradient top */
+  --cB:     light-dark(#FFFFFF,#0F0F11);   /* card gradient bottom */
+  --tA:     light-dark(#F8F8FA,#2C2C32);   /* icon tile top */
+  --tB:     light-dark(#ECECF0,#17171B);   /* icon tile bottom */
+  --well:   light-dark(#F5F5F7,#0E0E10);   /* nested tile inside a card */
+
+  /* ---- ink ---- */
+  --ink:    light-dark(#1D1D1F,#FFFFFF);   /* titles, numbers */
+  --ink2:   light-dark(#48484A,#B4B4BA);   /* body */
+  --ink3:   light-dark(#6E6E73,#8E8E93);   /* labels, meta */
+
+  /* ---- lines + shadow ---- */
+  --rim:    light-dark(rgba(0,0,0,.07),rgba(255,255,255,.12));  /* 1px card edge */
+  --sep:    light-dark(rgba(0,0,0,.08),rgba(255,255,255,.10));  /* dividers */
+  --shc:    light-dark(rgba(0,0,0,.05),transparent);            /* contact shadow */
+  --shc2:   light-dark(rgba(0,0,0,.07),transparent);            /* ambient shadow */
+
+  /* ---- the three activity accents ----
+     Each accent has 4 roles:
+       --X   : fill / stroke (vivid)        --X2 : gradient partner (lighter)
+       --XT  : text-safe tone (AA on bg)    --trackX : empty ring / bar track   */
+  --green:  light-dark(#34C759,#A6FF00); --green2:light-dark(#6FDD8B,#D2FF5C);
+  --greenT: light-dark(#1A8A3A,#B4FF2E); --trackG:light-dark(#DDF5E3,#26390A);
+  --cyan:   light-dark(#32ADE6,#00D8FE); --cyan2: light-dark(#7FD4F5,#7BF3FF);
+  --cyanT:  light-dark(#0071A4,#5BDCFF); --trackC:light-dark(#DDF1FA,#06323A);
+  --red:    light-dark(#FF2D55,#FA114F); --red2:  light-dark(#FF6B88,#FF6A97);
+  --redT:   light-dark(#D70F45,#FF4D7A); --trackR:light-dark(#FFE1E8,#3A0814);
+  --amber:  light-dark(#FF9500,#FF9F0A); --amber2:light-dark(#FFC048,#FFD06B);
+  --amberT: light-dark(#B35900,#FFB547);
+
+  /* ---- chips (filled pills) ---- */
+  --chipG:  light-dark(#E6F7EA,#D2FF5C); --chipGt:light-dark(#17803A,#0A0A0A);
+  --chipR:  light-dark(#FFEAEF,#FF6A97); --chipRt:light-dark(#C8103F,#0A0A0A);
+  --chipC:  light-dark(#E4F4FC,#7BF3FF); --chipCt:light-dark(#006C9C,#0A0A0A);
+
+  /* ---- tinted pictogram tiles ---- */
+  --eA:     light-dark(#F2FAF4,#2C2C32); --eB:light-dark(#E2F3E6,#17171B);   /* green family */
+  --sA:     light-dark(#FFF4F6,#2C2C32); --sB:light-dark(#FFE3E9,#17171B);   /* red family */
+
+  /* ---- pictogram ink (see icons/README.md) ---- */
+  --ic-fg:   var(--ink);
+  --ic-ghost:light-dark(#C3C8CE,#4C4C52);
+  --ic-mut:  light-dark(#CDD1D6,#3F3F45);
+  --ic-acc:  light-dark(#20A84A,#A6FF00);
+  --ic-acc2: light-dark(#F2224F,#FA114F);
+  --ic-ko:   light-dark(#EAF7ED,#222227);
+
+  /* ---- hero gradient (headline second line, progress line) ---- */
+  --heroA:  light-dark(#22B04F,#A6FF00);
+  --heroB:  light-dark(#0A8FD0,#00D8FE);
+
+  /* ---- light & motion ---- */
+  --shine:  light-dark(rgba(0,113,227,.55),rgba(255,255,255,.95));  /* rim highlight core */
+  --shineT: light-dark(rgba(52,199,89,.35),rgba(0,216,254,.45));    /* rim highlight tint */
+  --glow:   light-dark(rgba(0,113,227,.06),rgba(255,255,255,.07));  /* surface glow */
+  --ease:   cubic-bezier(.2,.8,.2,1);                               /* Halo's only curve */
+  --focus:  light-dark(#0071E3,#5BDCFF);
+
+  /* ---- shape + layout ---- */
+  --r:      22px;     /* card radius */
+  --r-sm:   14px;     /* nested tiles, inputs */
+  --r-lg:   28px;     /* sheets */
+  --max:    1180px;   /* content width */
+  --nav-h:  62px;
+
+  /* ---- type ---- */
+  --font-latin:"Google Sans";
+  --font-arabic:"IBM Plex Sans Arabic";
+  --font: var(--font-latin),var(--font-arabic),system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+:root[data-theme=light]{color-scheme:light}
+:root[data-theme=dark]{color-scheme:dark}
+/* Arabic-script languages: put the Arabic face first so Latin digits inside
+   Kurdish text still come from Google Sans but the shaping is Plex. */
+:root[lang=ckb],:root[lang=ar],:root[lang=fa]{--font:var(--font-arabic),var(--font-latin),system-ui,sans-serif}

@@ -1,0 +1,159 @@
+{
+  "$schema": "https://www.designtokens.org/schemas/2025.10/format.json",
+  "$description": "Halo base tokens (theme-independent). Pair with halo.light / halo.dark colour files, e.g. as two contexts of the DTCG Resolver Module.",
+  "radius": {
+    "$type": "dimension",
+    "card": {
+      "$value": {
+        "value": 22,
+        "unit": "px"
+      }
+    },
+    "tile": {
+      "$value": {
+        "value": 14,
+        "unit": "px"
+      }
+    },
+    "sheet": {
+      "$value": {
+        "value": 28,
+        "unit": "px"
+      }
+    },
+    "pill": {
+      "$value": {
+        "value": 999,
+        "unit": "px"
+      }
+    }
+  },
+  "size": {
+    "$type": "dimension",
+    "content-max": {
+      "$value": {
+        "value": 1180,
+        "unit": "px"
+      }
+    },
+    "nav-height": {
+      "$value": {
+        "value": 62,
+        "unit": "px"
+      }
+    },
+    "nav-height-phone": {
+      "$value": {
+        "value": 56,
+        "unit": "px"
+      }
+    },
+    "touch-target": {
+      "$value": {
+        "value": 44,
+        "unit": "px"
+      }
+    },
+    "touch-target-quiet": {
+      "$value": {
+        "value": 40,
+        "unit": "px"
+      }
+    }
+  },
+  "motion": {
+    "ease": {
+      "$type": "cubicBezier",
+      "$value": [
+        0.2,
+        0.8,
+        0.2,
+        1
+      ],
+      "$description": "The only easing curve in Halo"
+    },
+    "duration": {
+      "$type": "duration",
+      "press": {
+        "$value": {
+          "value": 250,
+          "unit": "ms"
+        }
+      },
+      "lift": {
+        "$value": {
+          "value": 600,
+          "unit": "ms"
+        }
+      },
+      "reveal": {
+        "$value": {
+          "value": 900,
+          "unit": "ms"
+        }
+      },
+      "glow": {
+        "$value": {
+          "value": 450,
+          "unit": "ms"
+        }
+      },
+      "ring": {
+        "$value": {
+          "value": 900,
+          "unit": "ms"
+        }
+      },
+      "stagger": {
+        "$value": {
+          "value": 70,
+          "unit": "ms"
+        }
+      }
+    }
+  },
+  "font": {
+    "$type": "fontFamily",
+    "latin": {
+      "$value": [
+        "Google Sans",
+        "system-ui",
+        "-apple-system",
+        "Segoe UI",
+        "Roboto",
+        "sans-serif"
+      ]
+    },
+    "arabic-script": {
+      "$value": [
+        "IBM Plex Sans Arabic",
+        "Google Sans",
+        "system-ui",
+        "sans-serif"
+      ]
+    },
+    "print-latin": {
+      "$value": [
+        "Inter",
+        "Google Sans",
+        "sans-serif"
+      ],
+      "$description": "Used in vector PDFs where Inter's tabular figures and wide weight range help"
+    }
+  },
+  "fontWeight": {
+    "$type": "fontWeight",
+    "body": {
+      "$value": 400
+    },
+    "label": {
+      "$value": 600
+    },
+    "ui": {
+      "$value": 650
+    },
+    "title": {
+      "$value": 700
+    }
+  }
+}

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<title>Halo print template · A4</title>
+<!-- Print template: vector-only. Vector shadow = .sh wrapper: stacked translucent rects (.vs) painted BEFORE the opaque card.
+      No box-shadow, no filter, no backdrop-filter, no raster images.
+     Print with:  python3 scripts/print_pdf.py templates/print-a4.html out.pdf
+     Switch theme by changing data-theme on <html>. For RTL set lang="ckb" dir="rtl". -->
+<link rel="stylesheet" href="../tokens/tokens.css">
+<style>
+  /* Print embeds local font files (never a web request): Inter for Latin, IBM Plex Sans Arabic for Sorani. */
+  @font-face{font-family:"Halo Print";src:url(../fonts/inter/Inter-Regular.ttf);font-weight:400}
+  @font-face{font-family:"Halo Print";src:url(../fonts/inter/Inter-Medium.ttf);font-weight:500}
+  @font-face{font-family:"Halo Print";src:url(../fonts/inter/Inter-SemiBold.ttf);font-weight:600}
+  @font-face{font-family:"Halo Print";src:url(../fonts/inter/Inter-Bold.ttf);font-weight:700 900}
+  @font-face{font-family:"Halo Print AR";src:url(../fonts/ibm-plex-sans-arabic/IBMPlexSansArabic-Regular.ttf);font-weight:400}
+  @font-face{font-family:"Halo Print AR";src:url(../fonts/ibm-plex-sans-arabic/IBMPlexSansArabic-Medium.ttf);font-weight:500}
+  @font-face{font-family:"Halo Print AR";src:url(../fonts/ibm-plex-sans-arabic/IBMPlexSansArabic-SemiBold.ttf);font-weight:600}
+  @font-face{font-family:"Halo Print AR";src:url(../fonts/ibm-plex-sans-arabic/IBMPlexSansArabic-Bold.ttf);font-weight:700 900}
+  :root{--font:"Halo Print","Halo Print AR",sans-serif}
+  :root[dir=rtl]{--font:"Halo Print AR","Halo Print",sans-serif}
+  @page{size:595pt 842pt;margin:0}
+  html,body{margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-family:var(--font);color:var(--ink)}
+  .page{position:relative;width:595pt;height:842pt;overflow:hidden;background:var(--bg);break-after:page;padding:36pt;box-sizing:border-box}
+  .page:last-child{break-after:auto}
+  /* soft corner glow: a vector radial gradient, not a blur filter */
+  .glow{position:absolute;inset-inline-start:-240pt;top:-300pt;width:560pt;height:560pt;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--green) 22%,transparent),transparent 65%)}
+  .kick{font-size:10.8pt;font-weight:700;color:var(--greenT);letter-spacing:.02em;position:relative}
+  .head{position:relative;margin-top:8pt}
+  /* gradient headline as SVG text: survives every PDF viewer */
+  .head svg{display:block;overflow:visible}
+  .card{position:relative;border-radius:20pt;padding:16pt;background:linear-gradient(180deg,var(--cA),var(--cB));border:.8pt solid var(--rim)}
+  /* vector shadow for light theme: stacked translucent rounded rects (box-shadow would be rasterised) */
+  .sh{position:relative}.vs{position:absolute;inset:0;border-radius:20pt;pointer-events:none}
+  .vs i{position:absolute;inset:0;border-radius:inherit;background:#000}
+  :root[data-theme=dark] .vs{display:none}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:10pt;margin-top:18pt;position:relative}
+  .lab{font-size:8.5pt;font-weight:700;color:var(--ink3)}
+  .v{font-size:24pt;font-weight:700;letter-spacing:-.03em;margin-top:4pt}
+  .s{font-size:8.5pt;color:var(--ink2);margin-top:2pt}
+  p{font-size:10pt;line-height:1.5;color:var(--ink2);margin:8pt 0 0}
+  a{color:var(--cyanT);font-weight:700;text-decoration:none;font-size:9pt}
+  .foot{position:absolute;inset-inline:36pt;bottom:22pt;border-top:.8pt solid var(--sep);padding-top:6pt;display:flex;justify-content:space-between;font-size:7.5pt;font-weight:600;color:var(--ink3)}
+  :root[dir=rtl] .head svg text{direction:rtl}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="glow"></div>
+  <div class="kick">01 · Overview</div>
+  <div class="head"><svg width="523pt" height="84pt" viewBox="0 0 523 84" aria-label="Lose the fat. Keep the muscle.">
+    <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" style="stop-color:var(--heroA)"/><stop offset="1" style="stop-color:var(--heroB)"/></linearGradient></defs>
+    <text x="0" y="34" style="font:700 34px var(--font);fill:var(--ink);letter-spacing:-1px">Lose the fat.</text>
+    <text x="0" y="76" style="font:700 34px var(--font);letter-spacing:-1px" fill="url(#g)">Keep the muscle.</text></svg></div>
+  <p style="max-width:380pt;position:relative">A Halo print page: true vector output with selectable text, embedded fonts and live links. Shadows in the light theme are stacked translucent shapes, because Chrome turns box-shadow into bitmaps.</p>
+  <div class="grid">
+    <div class="sh"><div class="vs" aria-hidden="true"><i style="transform:translateY(2pt);opacity:.03"></i><i style="transform:translateY(5pt);opacity:.025"></i><i style="transform:translateY(9pt);opacity:.02"></i></div><div class="card">
+      <div style="position:relative"><div class="lab">Goal</div><div class="v tone-red" style="color:var(--redT)">−20 kg</div><div class="s">105 → 85 kg</div></div></div></div>
+    <div class="sh"><div class="vs" aria-hidden="true"><i style="transform:translateY(2pt);opacity:.03"></i><i style="transform:translateY(5pt);opacity:.025"></i><i style="transform:translateY(9pt);opacity:.02"></i></div><div class="card">
+      <div style="position:relative"><div class="lab">Steps</div><div class="v" style="color:var(--cyanT)">10,000</div><div class="s">every single day</div></div></div></div>
+  </div>
+  <div class="card" style="margin-top:10pt"><div style="position:relative"><div class="lab">Source</div><p>Every factual claim in a Halo document links to its source.</p><p><a href="https://www.who.int/news-room/fact-sheets/detail/physical-activity">WHO physical activity guidelines ↗</a></p></div></div>
+  <div class="foot"><span>01</span><span>HALO PRINT TEMPLATE</span></div>
+</div>
+<script>
+/* RTL: SVG text has no logical properties, so anchor headline lines at the right edge */
+if(document.documentElement.dir==='rtl')document.querySelectorAll('.head svg').forEach(svg=>{const w=svg.viewBox.baseVal.width;
+  svg.querySelectorAll('text').forEach(t=>{t.setAttribute('x',w);t.setAttribute('direction','rtl');t.setAttribute('text-anchor','start')})});
+</script>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Halo Starter · Daily Focus</title>
+<meta name="color-scheme" content="light dark">
+<!-- Fonts: Google Sans (Latin) + IBM Plex Sans Arabic (Sorani / Arabic script). Both OFL, both on Google Fonts. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400..700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens/tokens.css">
+<link rel="stylesheet" href="../css/halo.css">
+<style>
+  /* page-specific layout only; everything else comes from halo.css */
+  .today .ringsbox{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(200px,1fr);gap:24px;align-items:center;flex:1;margin-top:12px}
+  @media(max-width:520px){.today .ringsbox{grid-template-columns:1fr}.today .ringsbox .rings{max-width:220px;margin:0 auto}}
+  .today .ringsbox .rings{max-width:280px;margin-inline:auto}
+  .rrow{display:grid;gap:6px;padding:12px 0;border-bottom:1px solid var(--sep)}.rrow:last-child{border-bottom:0}
+  .rrow .t{display:flex;justify-content:space-between;align-items:baseline;gap:10px}.rrow .t span{font-weight:700;font-size:17px;white-space:nowrap}
+  .task .top{display:grid;grid-template-columns:56px minmax(0,1fr);gap:14px;align-items:start}
+  .task p{color:var(--ink2);font-size:15px}
+  .task .foot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding-top:10px;border-top:1px solid var(--sep)}
+  .breathe{display:grid;justify-items:center;gap:14px;text-align:center}
+  .orb{width:180px;height:180px;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--cyan2),var(--cyan) 55%,var(--trackC));box-shadow:0 0 60px color-mix(in srgb,var(--cyan) 40%,transparent);transform:scale(.72)}
+  .orb.run{animation:breathe 10s var(--ease) infinite}
+  @keyframes breathe{0%,100%{transform:scale(.72)}40%{transform:scale(1)}}
+  @media (prefers-reduced-motion:reduce){.orb.run{animation:none;transform:scale(.9)}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#today"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="12" fill="none" stroke="var(--red)" stroke-width="5"/><circle cx="16" cy="16" r="5.5" fill="none" stroke="var(--green)" stroke-width="4"/></svg><span data-i18n="brand">Daily Focus</span></a>
+    <nav class="links" aria-label="Sections">
+      <a href="#today" data-i18n="nav.today">Today</a><a href="#tasks" data-i18n="nav.tasks">Tasks</a><a href="#trend" data-i18n="nav.trend">Trend</a><a href="#notes" data-i18n="nav.notes">Notes</a>
+    </nav>
+    <div class="acts">
+      <button class="btn lang" type="button" data-lang-btn data-i18n="langBtn">کوردی</button>
+      <button class="btn ic hide-phone" type="button" data-sound-btn></button>
+      <button class="btn ic" type="button" data-theme-btn></button>
+      <a class="gh" href="https://github.com/SawabS" target="_blank" rel="noopener" data-i18n-label="github"><span class="ghi"></span><span dir="ltr">GitHub</span></a>
+      <button class="btn ic" type="button" data-menu-btn aria-expanded="false" aria-controls="menu"></button>
+    </div>
+  </div>
+  <div class="menu" id="menu"><div class="wrap">
+    <a href="#today" data-i18n="nav.today">Today</a><a href="#tasks" data-i18n="nav.tasks">Tasks</a><a href="#trend" data-i18n="nav.trend">Trend</a><a href="#notes" data-i18n="nav.notes">Notes</a>
+    <button class="full only-phone" type="button" data-sound-btn></button>
+  </div></div>
+</header>
+
+<main id="main">
+  <!-- 1 · HERO: text column + feature card, equal height on laptop -->
+  <section id="today" class="band"><div class="wrap split">
+    <div data-drift>
+      <div class="kicker"><b data-i18n="kicker">Halo starter</b><span data-i18n="kickerSub">Dark · Light · English · کوردی</span></div>
+      <h1><span data-i18n="h1a">Do the work.</span><br><span class="grad" data-i18n="h1b">Close the rings.</span></h1>
+      <p class="lede" data-i18n="lede">A template that shows every Halo pattern at once: rim-lit cards, rings, a timer with calm sound, a sheet you can swipe, and a layout that balances itself from phone to laptop.</p>
+      <div class="grid g2 keep mt22" id="stats"></div>
+    </div>
+    <div class="card today" aria-labelledby="tdh">
+      <div class="row between"><h3 id="tdh" data-i18n="today">Today</h3><span class="mut" id="date" style="font-weight:600;font-size:14px"></span></div>
+      <div class="ringsbox"><div id="bigRings"></div>
+        <div>
+          <div class="rrow"><div class="t"><b class="tone-red" data-i18n="focus">Focus</b><span id="vFocus"></span></div><button class="btn sm" type="button" id="startFocus" data-i18n="startFocus">Start 25 min</button></div>
+          <div class="rrow"><div class="t"><b class="tone-green" data-i18n="tasksDone">Tasks</b><span id="vTasks"></span></div><a class="btn sm" href="#tasks" data-i18n="seeTasks">See tasks</a></div>
+          <div class="rrow"><div class="t"><b class="tone-cyan" data-i18n="breaks">Breaks</b><span id="vBreaks"></span></div><button class="btn sm" type="button" id="openBreathe" data-i18n="breathe">Breathe 1 min</button></div>
+        </div>
+      </div>
+      <div class="row between card-foot mt14"><span class="mut" style="font-size:13px" data-i18n="saved">Saved on this device only.</span><button class="btn sm" type="button" id="reset" data-i18n="reset">Reset today</button></div>
+    </div>
+  </div></section>
+
+  <!-- 2 · CARD GRID with filters, check dots, pinned footers -->
+  <section id="tasks" class="band"><div class="wrap">
+    <div class="head"><h2 data-i18n="tasksTitle">Three things.<br>Done well.</h2><div class="filters" role="group" aria-label="Filter" id="filters"></div></div>
+    <div class="grid g3" id="taskGrid"></div>
+  </div></section>
+
+  <!-- 3 · DATA: KPIs + chart that fills its card -->
+  <section id="trend" class="band"><div class="wrap">
+    <div class="head"><h2 data-i18n="trendTitle">Measure the trend,<br>not the day.</h2></div>
+    <div class="card" style="display:flex;flex-direction:column"><div class="kpis" id="kpis"></div><div class="fig mt14" style="height:300px"><svg id="chart" role="img" aria-label="Focus minutes, last 14 days"></svg></div></div>
+  </div></section>
+
+  <!-- 4 · CHECKLIST TILES + SOURCES -->
+  <section id="notes" class="band"><div class="wrap">
+    <div class="head"><h2 data-i18n="notesTitle">The rules.</h2></div>
+    <div class="card"><ul class="checks tiles" id="rules"></ul></div>
+    <h3 class="mt22" style="margin-bottom:12px" data-i18n="sources">Sources</h3>
+    <ol class="sources">
+      <li><div><a class="ext" href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/light-dark" target="_blank" rel="noopener" dir="ltr">light-dark()</a><span>MDN</span></div></li>
+      <li><div><a class="ext" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog" target="_blank" rel="noopener" dir="ltr">&lt;dialog&gt;</a><span>MDN</span></div></li>
+      <li><div><a class="ext" href="https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API" target="_blank" rel="noopener" dir="ltr">Intersection Observer</a><span>MDN</span></div></li>
+      <li><div><a class="ext" href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API" target="_blank" rel="noopener" dir="ltr">Web Audio API</a><span>MDN</span></div></li>
+    </ol>
+  </div></section>
+</main>
+
+<footer class="foot"><div class="wrap"><p data-i18n="footer">Built with Halo · tokens, components, motion, sound.</p><a class="btn sm" href="#today" data-i18n="top">Back to top</a></div></footer>
+
+<!-- Sheet: guided breathing with ambient sound; swipe left/right switches length -->
+<dialog class="sheet" id="breatheDlg" aria-labelledby="bT"><div class="body">
+  <div class="hd"><h3 id="bT" data-i18n="breatheTitle">One-minute breath</h3><button class="btn ic" type="button" data-close data-i18n-label="close"></button></div>
+  <div class="breathe">
+    <div class="orb" id="orb"></div>
+    <p class="mut" data-i18n="breatheHint">In for four as it grows, out for six as it shrinks.</p>
+    <div class="row"><button class="btn ic" type="button" id="bPrev"></button><button class="btn pri" type="button" id="bPlay" data-i18n="begin">Begin</button><button class="btn ic" type="button" id="bNext"></button></div>
+    <p class="mut num" id="bLen"></p>
+  </div>
+</div></dialog>
+
+<script src="../js/halo.js"></script>
+<script src="../js/halo-sound.js"></script>
+<script>
+const DICT={
+ en:{skip:'Skip to content',brand:'Daily Focus','nav.today':'Today','nav.tasks':'Tasks','nav.trend':'Trend','nav.notes':'Notes',langBtn:'کوردی',github:'GitHub profile',
+  kicker:'Halo starter',kickerSub:'Dark · Light · English · کوردی',h1a:'Do the work.',h1b:'Close the rings.',
+  lede:'A template that shows every Halo pattern at once: rim-lit cards, rings, a timer with calm sound, a sheet you can swipe, and a layout that balances itself from phone to laptop.',
+  today:'Today',focus:'Focus',tasksDone:'Tasks',breaks:'Breaks',startFocus:'Start 25 min',seeTasks:'See tasks',breathe:'Breathe 1 min',saved:'Saved on this device only.',reset:'Reset today',
+  tasksTitle:'Three things.\nDone well.',trendTitle:'Measure the trend,\nnot the day.',notesTitle:'The rules.',sources:'Sources',footer:'Built with Halo · tokens, components, motion, sound.',top:'Back to top',
+  breatheTitle:'One-minute breath',breatheHint:'In for four as it grows, out for six as it shrinks.',begin:'Begin',stop:'Stop',min:'min',sec:'s',
+  all:'All',deep:'Deep work',light:'Light',done:'Done',rest:'Focus',pause:'Pause',resume:'Resume',skip:'Skip',undo:'Undo',close:'Close',menu:'Menu',toDark:'Switch to dark theme',toLight:'Switch to light theme',
+  soundOn:'Sound on',soundOff:'Sound off',resetDone:'Today was reset.',focusDone:'Focus session complete.',
+  stat1:'Focus',stat1v:'90 min',stat1s:'a day, in three blocks',stat2:'Tasks',stat2v:'3',stat2s:'that matter',stat3:'Breaks',stat3v:'4×',stat3s:'one minute each',stat4:'Streak',stat4v:'12 days',stat4s:'keep it going',
+  t1:'Write the brief',t1d:'One page. The problem, who has it, what done looks like.',t2:'Review two pull requests',t2d:'Read for intent first, then style. Leave one kind sentence.',t3:'Plan tomorrow',t3d:'Pick three tasks before you close the laptop.',
+  k1:'Today',k2:'7-day average',k3:'Best day',k4:'Goal',
+  r1:'<strong>Tokens first.</strong> Every colour comes from tokens.css, written once with light-dark().',r2:'<strong>Platform first.</strong> dialog, IntersectionObserver, Web Audio. A library only when it is the standard for that job.',
+  r3:'<strong>Balance the laptop.</strong> Equal-height columns, pinned footers, charts that fill their card.',r4:'<strong>Phones are not small laptops.</strong> 40 px quiet icons, swipe, haptics, safe areas.',
+  r5:'<strong>RTL is a first-class layout.</strong> Logical properties, mirrored charts, Plex for Arabic script.',r6:'<strong>Motion is light, not noise.</strong> One curve, one duration family, off under reduced motion.'},
+ ckb:{skip:'بازدان بۆ ناوەڕۆک',brand:'سەرنجی ڕۆژانە','nav.today':'ئەمڕۆ','nav.tasks':'ئەرکەکان','nav.trend':'ئاراستە','nav.notes':'تێبینی',langBtn:'English',github:'پرۆفایلی GitHub',
+  kicker:'دەستپێکی Halo',kickerSub:'تاریک · ڕووناک · English · کوردی',h1a:'کارەکە بکە.',h1b:'بازنەکان دابخە.',
+  lede:'نموونەیەک کە هەموو شێوازەکانی Halo پێکەوە نیشان دەدات: کارتی دیواری ڕووناک، بازنەکان، کاتژمێرێک بە دەنگی ئارام، پەڕەیەک کە دەتوانیت بیخلیسکێنیت، و دیزاینێک کە لە مۆبایلەوە تا لاپتۆپ هاوسەنگ دەبێت.',
+  today:'ئەمڕۆ',focus:'سەرنج',tasksDone:'ئەرکەکان',breaks:'پشووەکان',startFocus:'دەستپێکردنی ٢٥ خولەک',seeTasks:'بینینی ئەرکەکان',breathe:'هەناسەدان ١ خولەک',saved:'تەنها لەسەر ئەم ئامێرە پاشەکەوت دەکرێت.',reset:'سفرکردنەوەی ئەمڕۆ',
+  tasksTitle:'سێ شت.\nبە باشی.',trendTitle:'ئاراستەکە بپێوە،\nنەک ڕۆژەکە.',notesTitle:'یاساکان.',sources:'سەرچاوەکان',footer:'دروستکراوە بە Halo · تۆکن، پێکهاتە، جووڵە، دەنگ.',top:'گەڕانەوە بۆ سەرەوە',
+  breatheTitle:'هەناسەی یەک خولەکی',breatheHint:'چوار چرکە هەناسە هەڵبمژە کاتێک گەورە دەبێت، شەش چرکە دەریبدە کاتێک بچووک دەبێتەوە.',begin:'دەستپێکردن',stop:'وەستان',min:'خولەک',sec:'چرکە',
+  all:'هەموو',deep:'کاری قووڵ',light:'سووک',done:'تەواو',rest:'سەرنج',pause:'وەستان',resume:'بەردەوامبوون',skip:'تێپەڕاندن',undo:'گەڕانەوە',close:'داخستن',menu:'لیست',toDark:'گۆڕین بۆ ڕووکاری تاریک',toLight:'گۆڕین بۆ ڕووکاری ڕووناک',
+  soundOn:'دەنگ کراوەیە',soundOff:'دەنگ داخراوە',resetDone:'ئەمڕۆ سفر کرایەوە.',focusDone:'کاتی سەرنج تەواو بوو.',
+  stat1:'سەرنج',stat1v:'90 خولەک',stat1s:'لە ڕۆژێکدا، لە سێ بەشدا',stat2:'ئەرکەکان',stat2v:'3',stat2s:'کە گرنگن',stat3:'پشووەکان',stat3v:'×4',stat3s:'هەریەکە یەک خولەک',stat4:'زنجیرە',stat4v:'12 ڕۆژ',stat4s:'بەردەوام بە',
+  t1:'نووسینی کورتە',t1d:'یەک پەڕە. کێشەکە، کێ هەیەتی، تەواوبوون چۆنە.',t2:'پێداچوونەوەی دوو داواکاری',t2d:'سەرەتا مەبەستەکە بخوێنەوە، پاشان شێوازەکە. ڕستەیەکی میهرەبان بنووسە.',t3:'پلانی سبەی',t3d:'پێش داخستنی لاپتۆپ سێ ئەرک هەڵبژێرە.',
+  k1:'ئەمڕۆ',k2:'تێکڕای ٧ ڕۆژ',k3:'باشترین ڕۆژ',k4:'ئامانج',
+  r1:'<strong>سەرەتا تۆکن.</strong> هەموو ڕەنگێک لە <bdi>tokens.css</bdi> دێت، یەکجار بە <bdi>light-dark()</bdi> نووسراوە.',r2:'<strong>سەرەتا پلاتفۆرم.</strong> <bdi>dialog</bdi> و <bdi>IntersectionObserver</bdi> و <bdi>Web Audio</bdi>. کتێبخانە تەنها کاتێک کە ستانداردی ئەو کارەیە.',
+  r3:'<strong>لاپتۆپ هاوسەنگ بکە.</strong> ستوونی هاوبەرز، پێپەڕەی جێگیر، هێڵکاری کە کارتەکەی پڕ دەکاتەوە.',r4:'<strong>مۆبایل لاپتۆپی بچووک نییە.</strong> ئایکۆنی ئارامی 40px، خلیسکاندن، لەرینەوە، ناوچەی سەلامەت.',
+  r5:'<strong>ڕاست بۆ چەپ دیزاینی سەرەکییە.</strong> تایبەتمەندی لۆجیکی، هێڵکاری پێچەوانەکراو، Plex بۆ پیتی عەرەبی.',r6:'<strong>جووڵە ڕووناکییە، نەک ژاوەژاو.</strong> یەک چەماوە، یەک خێزانی ماوە، لە کەمکردنەوەی جووڵەدا دەکوژێتەوە.'}};
+
+const {$,$$,esc,t,store}=Halo;
+Halo.init({dict:DICT});
+$('.ghi').outerHTML=Halo.icons.github;
+const day=Object.assign({focus:0,tasks:[[false,false],[false,false,false],[false]],breaks:0},store.get('day',{}));
+const save=()=>store.set('day',day);
+let filt='all';
+const TASKS=[{k:'t1',cat:'deep',n:2,icon:'<path d="M6 3h9l3 3v15H6z"/><path d="M9 9h6M9 13h6M9 17h4"/>'},{k:'t2',cat:'deep',n:3,icon:'<circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M6 8.5v7a2.5 2.5 0 0 0 2.5 2.5H15"/>'},{k:'t3',cat:'light',n:1,icon:'<rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/>'}];
+const doneCount=()=>day.tasks.flat().filter(Boolean).length,total=()=>day.tasks.flat().length;
+
+function render(){
+  const R=Halo.i18n.isRTL();
+  $('#date').textContent=Halo.i18n.date(new Date());
+  $('#stats').innerHTML=[1,2,3,4].map(i=>`<div class="card stat"><div class="label">${esc(t('stat'+i))}</div><div class="v ${['tone-red','tone-green','tone-cyan','tone-ink'][i-1]}">${esc(t('stat'+i+'v'))}</div><div class="s">${esc(t('stat'+i+'s'))}</div></div>`).join('');
+  $('#bigRings').innerHTML=Halo.rings([{k:'f',r:100,w:26,c:'red',track:'R'},{k:'t',r:70,w:26,c:'green',track:'G'},{k:'b',r:40,w:26,c:'cyan',track:'C'}],226);
+  $('#filters').innerHTML=['all','deep','light'].map(f=>`<button type="button" data-f="${f}" aria-pressed="${f===filt}">${esc(t(f))}</button>`).join('');
+  $('#taskGrid').innerHTML=TASKS.map((k,i)=>`<article class="card task stack" data-cat="${k.cat}" ${filt!=='all'&&filt!==k.cat?'hidden':''}>
+    <div class="top"><div class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="var(--greenT)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${k.icon}</svg></div><div><div class="label tone-green">${String(i+1).padStart(2,'0')}</div><h3>${esc(t(k.t||k.k))}</h3></div></div>
+    <p>${esc(t(k.k+'d'))}</p>
+    <div class="foot"><div class="dots">${day.tasks[i].map((v,j)=>`<button type="button" class="dot" data-d="${i}:${j}" aria-pressed="${v}" aria-label="${j+1}">${v?Halo.icons.check.replace('<svg','<svg width="18" height="18" stroke="currentColor"'):j+1}</button>`).join('')}</div><span class="chip ${k.cat==='deep'?'green':'cyan'}">${esc(t(k.cat))}</span></div></article>`).join('');
+  $('#rules').innerHTML=[1,2,3,4,5,6].map(i=>`<li><span class="chk">${Halo.icons.check}</span><span>${t('r'+i)}</span></li>`).join('');
+  $$('h2[data-i18n]').forEach(h=>h.innerHTML=esc(t(h.dataset.i18n)).replace('\n','<br>'));
+  $('#bPrev').innerHTML=Halo.icons.prev;$('#bNext').innerHTML=Halo.icons.next;$('#breatheDlg [data-close]').innerHTML=Halo.icons.x;
+  update();drawChart();Halo.reveal.refresh();soundIcon()}
+
+function update(){
+  $('#vFocus').textContent=`${day.focus} / 90 ${t('min')}`;$('#vTasks').textContent=`${doneCount()} / ${total()}`;$('#vBreaks').textContent=`${day.breaks} / 4`;
+  const s=$('#bigRings svg');Halo.setRing(s,'f',day.focus/90);Halo.setRing(s,'t',doneCount()/total());Halo.setRing(s,'b',day.breaks/4);
+  const v=[38,52,61,45,70,66,82,58,74,90,77,85,64,day.focus||72];
+  $('#kpis').innerHTML=[[t('k1'),(day.focus||72)+' '+t('min')],[t('k2'),Math.round(v.slice(-7).reduce((a,b)=>a+b)/7)+' '+t('min')],[t('k3'),Math.max(...v)+' '+t('min')],[t('k4'),'90 '+t('min')]].map(([a,b])=>`<div><b>${esc(b)}</b><span>${esc(a)}</span></div>`).join('')}
+
+/* Chart: drawn in LTR coordinates, x mirrored for RTL; redrawn on resize (ResizeObserver) */
+function drawChart(){const s=$('#chart'),W=s.clientWidth,Hh=s.clientHeight;if(!W||!Hh)return;const R=Halo.i18n.isRTL();
+  const v=[38,52,61,45,70,66,82,58,74,90,77,85,64,day.focus||72],ml=36,mr=12,mt=12,mb=26;
+  const X=i=>{const x=ml+i/(v.length-1)*(W-ml-mr);return R?W-x:x},Y=k=>mt+(100-k)/100*(Hh-mt-mb);
+  let g='';for(const k of [0,25,50,75,100])g+=`<line x1="${X(0)}" x2="${X(v.length-1)}" y1="${Y(k)}" y2="${Y(k)}" style="stroke:var(--sep)"/><text x="${R?W-ml+6:ml-6}" y="${Y(k)+4}" text-anchor="${R?'start':'end'}">${k}</text>`;
+  g+=`<line x1="${X(0)}" x2="${X(v.length-1)}" y1="${Y(90)}" y2="${Y(90)}" style="stroke:var(--green)" stroke-dasharray="5 5"/>`;
+  g+=`<polyline points="${v.map((k,i)=>X(i).toFixed(1)+','+Y(k).toFixed(1)).join(' ')}" fill="none" style="stroke:var(--cyan)" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+  v.forEach((k,i)=>g+=`<circle cx="${X(i)}" cy="${Y(k)}" r="4" style="fill:var(--card);stroke:var(--cyan)" stroke-width="2"/>`);s.innerHTML=g}
+new ResizeObserver(drawChart).observe($('#chart'));
+
+/* Sound toggle */
+function soundIcon(){if(!Halo.sound)return;const on=Halo.sound.on;$$('[data-sound-btn]').forEach(b=>{b.innerHTML=(on?Halo.icons.sound:Halo.icons.mute)+(b.classList.contains('full')?`<span>${esc(t(on?'soundOn':'soundOff'))}</span>`:'');
+  b.querySelector('svg').setAttribute('width','20');b.querySelector('svg').setAttribute('height','20');b.setAttribute('aria-label',t(on?'soundOn':'soundOff'));b.setAttribute('aria-pressed',String(on))})}
+$$('[data-sound-btn]').forEach(b=>b.addEventListener('click',()=>{Halo.sound.toggle();soundIcon()}));
+
+/* Breathing sheet with ambient bed */
+let bLen=60,bRun=false,bT=0;
+const bLabel=()=>$('#bLen').textContent=bLen+' '+t('sec');
+$('#openBreathe').addEventListener('click',()=>{bLabel();Halo.dialog.open($('#breatheDlg'))});
+$('#bPlay').addEventListener('click',()=>{bRun=!bRun;$('#orb').classList.toggle('run',bRun);$('#bPlay').textContent=t(bRun?'stop':'begin');
+  if(bRun){Halo.sfx('calmOn');clearTimeout(bT);bT=setTimeout(()=>{bRun=false;$('#orb').classList.remove('run');$('#bPlay').textContent=t('begin');Halo.sfx('calmOff');Halo.sfx('complete');day.breaks=Math.min(4,day.breaks+1);save();update()},bLen*1000)}
+  else{clearTimeout(bT);Halo.sfx('calmOff')}});
+const lens=[30,60,120];const shift=d=>{bLen=lens[Math.max(0,Math.min(2,lens.indexOf(bLen)+d))];bLabel();Halo.sfx('tap')};
+$('#bPrev').addEventListener('click',()=>shift(-1));$('#bNext').addEventListener('click',()=>shift(1));
+Halo.swipe($('#breatheDlg .body'),{next:()=>shift(1),prev:()=>shift(-1)});
+$('#breatheDlg').addEventListener('close',()=>{if(bRun){bRun=false;clearTimeout(bT);$('#orb').classList.remove('run');$('#bPlay').textContent=t('begin');Halo.sfx('calmOff')}});
+
+/* Delegated clicks */
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.f){filt=b.dataset.f;Halo.sfx('tap');render();return}
+  if(b.dataset.d){const[i,j]=b.dataset.d.split(':').map(Number);day.tasks[i][j]=!day.tasks[i][j];save();Halo.haptic(day.tasks[i][j]?12:6);Halo.sfx(day.tasks[i][j]?'on':'off');
+    render();const n=$(`[data-d="${i}:${j}"]`);n&&n.focus();return}
+  if(b.id==='startFocus'){Halo.timer.start(25*60,{label:t('rest'),onEnd:()=>{day.focus=Math.min(90,day.focus+25);save();update();Halo.toast(t('focusDone'))}});return}
+  if(b.id==='reset'){const old=JSON.stringify(day);Object.assign(day,{focus:0,tasks:[[false,false],[false,false,false],[false]],breaks:0});save();render();Halo.toast(t('resetDone'),{undo:()=>{Object.assign(day,JSON.parse(old));save();render()}})}});
+Halo.i18n.onChange(render);
+render();
+</script>
+</body>
+</html>
