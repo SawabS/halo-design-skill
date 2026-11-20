@@ -8,7 +8,7 @@ Render every README / repo image from live Halo pages, reproducibly.
 Step 1 captures raw screenshots of the starter, the reference example and the PDFs
 (docs/assets/src/raw/, git-ignored). Step 2 renders docs/assets/src/studio.html,
 where each [data-asset] element is one finished image, at 2x.
-With internet access, Google Sans loads from Google Fonts; offline, Latin falls back to the system font.
+Fonts: IBM Plex Sans Arabic is served from fonts/ (Latin falls through to Plex too). Add --google-fonts to load Google Sans from the web instead.
 Requires: playwright (chromium) and poppler-utils (pdftoppm).
 """
 import asyncio, pathlib, subprocess, sys
@@ -18,12 +18,18 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 RAW = ROOT / "docs/assets/src/raw"; RAW.mkdir(parents=True, exist_ok=True)
 OUT = ROOT / "docs/assets"
 B = "http://localhost:8766"
+PLEX = "".join(f"@font-face{{font-family:'IBM Plex Sans Arabic';font-weight:{w};src:url({B}/fonts/ibm-plex-sans-arabic/IBMPlexSansArabic-{n}.ttf)}}"
+               for n, w in [("Regular", "400"), ("Medium", "500"), ("SemiBold", "600"), ("Bold", "700 900")])
 SEED = "localStorage.setItem('halo:day',JSON.stringify({focus:50,tasks:[[true,true],[true,false,false],[false]],breaks:2}))"
 
 async def shot(b, url, name, w, h, th, lang, ns="halo:", touch=False, dpr=2, prep=None, scroll=None, full=False):
     ctx = await b.new_context(viewport={"width": w, "height": h}, color_scheme=th, has_touch=touch, is_mobile=touch,
                               device_scale_factor=dpr, reduced_motion="reduce")
     p = await ctx.new_page()
+    if "--google-fonts" not in sys.argv:
+        # Offline-safe: answer Google Fonts with the bundled IBM Plex Sans Arabic, so Kurdish (and the Latin
+        # fallback) render in Plex exactly as on a real device. Pass --google-fonts to load Google's CSS instead.
+        await p.route("https://fonts.googleapis.com/**", lambda r: r.fulfill(status=200, content_type="text/css", body=PLEX))
     await p.add_init_script(f"try{{localStorage.setItem('{ns}lang',JSON.stringify('{lang}'));{SEED}}}catch(e){{}}")
     await p.goto(B + url); await p.wait_for_timeout(1200)
     if scroll: await p.evaluate(f"document.querySelector('{scroll}').scrollIntoView({{behavior:'instant'}})"); await p.wait_for_timeout(500)

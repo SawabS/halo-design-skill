@@ -13,7 +13,8 @@ Halo turns a product brief into a calm, glossy, data-forward interface that work
 3. **Both themes, both directions, every breakpoint** are designed and tested; none is an afterthought.
 4. **Numbers are the headline.** A few big accent numbers, each with a grey label above and a plain sentence below; rings and bars repeat them.
 5. **Motion is light.** One curve (`--ease`), reveal once, nothing loops, everything respects reduced motion.
-6. **Done means QA passed** ([`docs/13-qa.md`](docs/13-qa.md)).
+6. **No logos.** The brand slot is the product's own name in text. Never draw, invent or add a logo or mark; use one only if the user supplies it.
+7. **Done means QA passed** ([`docs/13-qa.md`](docs/13-qa.md)).
 
 ## Workflow
 

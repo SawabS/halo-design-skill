@@ -5,7 +5,7 @@ Every component below is in `css/halo.css`; the behaviour, where there is any, i
 ## Navigation bar
 ```html
 <header class="nav"><div class="wrap">
-  <a class="brand" href="#top"><svg>…</svg><span>Name</span></a>
+  <a class="brand" href="#top"><span>Product name</span></a>
   <nav class="links" aria-label="Sections"><a href="#a">A</a>…</nav>
   <div class="acts">
     <button class="btn lang" data-lang-btn>کوردی</button>
@@ -17,6 +17,7 @@ Every component below is in `css/halo.css`; the behaviour, where there is any, i
   <div class="menu" id="menu"><div class="wrap">…links… <button class="full only-phone" data-sound-btn></button></div></div>
 </header>
 ```
+- **Brand = the product's own name, as text.** Halo never draws, invents or requires a logo. If the product already owns a mark, it may sit before the name (`.brand img`); otherwise leave it out.
 - Sticky, frosted (`backdrop-filter: saturate(1.6) blur(18px)`), with a hairline under it.
 - Gains a soft shadow once scrolled (`.scrolled`) and a 2 px green→cyan **scroll-progress** line (added by `Halo.nav`).
 - Links show from 1180 px; below that, the menu holds every section plus secondary settings.

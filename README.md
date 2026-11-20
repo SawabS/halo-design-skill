@@ -218,4 +218,4 @@ Please run `qa/qa_layout.py` and `qa/qa_touch.py` on anything you change.
 - Fonts in `fonts/`: SIL Open Font License 1.1. Google Sans loads from Google Fonts (OFL).
 - Third-party projects are referenced, not bundled; see [`NOTICE.md`](NOTICE.md).
 
-<p align="center"><img alt="" src="docs/assets/logo.png" width="56"><br><sub>Made by <a href="https://github.com/SawabS">Sawab Hussein</a></sub></p>
+<p align="center"><sub>Made by <a href="https://github.com/SawabS">Sawab Hussein</a></sub></p>

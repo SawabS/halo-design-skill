@@ -12,7 +12,9 @@
 @font-face{font-family:"IBM Plex Sans Arabic";src:url(../../../fonts/ibm-plex-sans-arabic/IBMPlexSansArabic-Medium.ttf);font-weight:500}
 @font-face{font-family:"IBM Plex Sans Arabic";src:url(../../../fonts/ibm-plex-sans-arabic/IBMPlexSansArabic-SemiBold.ttf);font-weight:600}
 @font-face{font-family:"IBM Plex Sans Arabic";src:url(../../../fonts/ibm-plex-sans-arabic/IBMPlexSansArabic-Bold.ttf);font-weight:700 900}
-body{background:transparent;margin:0;padding:40px;display:grid;gap:40px;justify-items:start;font-family:var(--font)}
+body{background:transparent;margin:0;padding:40px;display:grid;gap:40px;justify-items:start}
+/* image text: IBM Plex Sans (Latin of IBM Plex Sans Arabic), the same family as the Kurdish */
+[data-asset]{--font-latin:"IBM Plex Sans Arabic";--font:"IBM Plex Sans Arabic",sans-serif;font-family:"IBM Plex Sans Arabic",sans-serif}
 [data-asset]{position:relative;overflow:hidden;flex:none}
 .dark{color-scheme:dark;background:#000;color:var(--ink)}
 .light{color-scheme:light;background:#F5F5F7;color:var(--ink)}
@@ -25,24 +27,20 @@ body{background:transparent;margin:0;padding:40px;display:grid;gap:40px;justify-
              radial-gradient(700px 480px at 92% 96%,color-mix(in srgb,var(--cyan) 16%,transparent),transparent 70%)}
 .abs{position:absolute}
 /* ---- device frames ---- */
-.win{position:absolute;border-radius:16px;overflow:hidden;border:1px solid var(--rim);background:var(--card);
+.win{position:absolute;border-radius:18px;overflow:hidden;border:1px solid var(--rim);background:var(--card);
   box-shadow:0 30px 80px rgba(0,0,0,.45),0 8px 20px rgba(0,0,0,.25)}
 .light .win{box-shadow:0 30px 70px rgba(0,0,0,.14),0 6px 16px rgba(0,0,0,.08)}
-.win .bar{height:34px;display:flex;align-items:center;gap:7px;padding:0 14px;background:light-dark(#E9E9EE,#1B1B1F);border-bottom:1px solid var(--sep)}
-.win .bar i{width:11px;height:11px;border-radius:50%;background:#FF5F57}.win .bar i:nth-child(2){background:#FEBC2E}.win .bar i:nth-child(3){background:#28C840}
-.win .bar span{margin:0 auto;font-size:12px;color:var(--ink3);background:light-dark(#fff,#0E0E10);padding:3px 14px;border-radius:7px;font-weight:600;transform:translateX(-20px)}
 .win img{display:block;width:100%}
-.phone{position:absolute;border-radius:56px;padding:11px;background:linear-gradient(145deg,#2a2a2e,#0b0b0c 40%,#1a1a1d);box-shadow:0 0 0 1.5px rgba(255,255,255,.14) inset,0 40px 90px rgba(0,0,0,.5),0 10px 24px rgba(0,0,0,.3)}
-.light .phone{box-shadow:0 0 0 1.5px rgba(255,255,255,.14) inset,0 36px 70px rgba(0,0,0,.18),0 8px 18px rgba(0,0,0,.1)}
-.phone img{display:block;width:100%;border-radius:46px}
-.phone::after{content:"";position:absolute;top:22px;left:50%;width:30%;height:26px;margin-left:-15%;background:#000;border-radius:20px}
+/* phone screens: the real 390 px capture on a rounded panel. No bezel, no fake notch. */
+.phone{position:absolute;border-radius:30px;overflow:hidden;border:1px solid var(--rim);background:var(--bg);box-shadow:0 30px 80px rgba(0,0,0,.5),0 8px 20px rgba(0,0,0,.28)}
+.light .phone{box-shadow:0 30px 70px rgba(0,0,0,.16),0 6px 16px rgba(0,0,0,.08)}
+.phone img{display:block;width:100%}
 /* static rim light on frames */
 .rim::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1.5px;z-index:3;pointer-events:none;
   background:radial-gradient(380px circle at var(--mx,85%) var(--my,0%),var(--shine),var(--shineT) 35%,transparent 70%);
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
 /* ---- type ---- */
 .kick{font-size:15px;font-weight:700;color:var(--greenT);display:flex;gap:10px;align-items:center}
-.kick svg{width:30px;height:30px}
 .h{font-weight:700;letter-spacing:-.04em;line-height:.98;margin:0}
 .sub{color:var(--ink2);font-size:19px;line-height:1.5}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
@@ -63,49 +61,49 @@ body{background:transparent;margin:0;padding:40px;display:grid;gap:40px;justify-
 <!-- ================= BANNER (dark) ================= -->
 <div data-asset="banner-dark" class="dark glowbg" style="width:1280px;height:640px">
   <div class="abs" style="left:72px;top:92px;width:520px;display:grid;gap:24px">
-    <div class="kick"><svg class="logo" viewBox="0 0 64 64"></svg>HALO · DESIGN SKILL FOR AI AGENTS</div>
+    <div class="kick">HALO · DESIGN SKILL FOR AI AGENTS</div>
     <h1 class="h" style="font-size:78px">Interfaces that<br><span class="grad">feel alive.</span></h1>
     <p class="sub" style="max-width:470px">Rings, rim-lit cards, quiet motion and calm sound. Dark and light, English and <span class="ku" style="direction:rtl;unicode-bidi:isolate">کوردی</span>, phone to laptop, and true vector PDF.</p>
     <div class="chips"><span class="chip green">Agent-ready</span><span class="chip cyan">LTR + RTL</span><span class="chip red">Vector PDF</span><span class="chip">Platform-first</span></div>
   </div>
-  <div class="win rim" style="left:640px;top:96px;width:600px;--mx:90%;--my:0%"><div class="bar"><i></i><i></i><i></i><span>halo · starter</span></div><img src="raw/starter_dark_en.png"></div>
-  <div class="phone" style="left:1046px;top:236px;width:196px"><img src="raw/phone_ckb_light.png"></div>
+  <div class="win rim" style="left:640px;top:96px;width:600px;--mx:90%;--my:0%"><img src="raw/starter_dark_en.png"></div>
+  <div class="phone" style="left:1050px;top:214px;width:180px"><img src="raw/phone_ckb_light.png"></div>
 </div>
 
 <!-- ================= BANNER (light) ================= -->
 <div data-asset="banner-light" class="light glowbg" style="width:1280px;height:640px">
   <div class="abs" style="left:72px;top:92px;width:520px;display:grid;gap:24px">
-    <div class="kick"><svg class="logo" viewBox="0 0 64 64"></svg>HALO · DESIGN SKILL FOR AI AGENTS</div>
+    <div class="kick">HALO · DESIGN SKILL FOR AI AGENTS</div>
     <h1 class="h" style="font-size:78px">Interfaces that<br><span class="grad">feel alive.</span></h1>
     <p class="sub" style="max-width:470px">Rings, rim-lit cards, quiet motion and calm sound. Dark and light, English and <span class="ku" style="direction:rtl;unicode-bidi:isolate">کوردی</span>, phone to laptop, and true vector PDF.</p>
     <div class="chips"><span class="chip green">Agent-ready</span><span class="chip cyan">LTR + RTL</span><span class="chip red">Vector PDF</span><span class="chip">Platform-first</span></div>
   </div>
-  <div class="win rim" style="left:640px;top:96px;width:600px;--mx:90%;--my:0%"><div class="bar"><i></i><i></i><i></i><span>halo · starter</span></div><img src="raw/starter_light_en.png"></div>
-  <div class="phone" style="left:1046px;top:236px;width:196px"><img src="raw/phone_ckb_dark.png"></div>
+  <div class="win rim" style="left:640px;top:96px;width:600px;--mx:90%;--my:0%"><img src="raw/starter_light_en.png"></div>
+  <div class="phone" style="left:1050px;top:214px;width:180px"><img src="raw/phone_ckb_dark.png"></div>
 </div>
 
 <!-- ================= SOCIAL PREVIEW (1280×640, rendered at 1x for GitHub) ================= -->
 <div data-asset="social-preview" class="dark glowbg" style="width:1280px;height:640px">
   <div class="abs" style="left:72px;top:110px;width:540px;display:grid;gap:26px">
-    <div class="kick" style="font-size:17px"><svg class="logo" viewBox="0 0 64 64" style="width:40px;height:40px"></svg>halo-design-skill</div>
+    <div class="kick" style="font-size:17px">halo-design-skill</div>
     <h1 class="h" style="font-size:72px">Interfaces that<br><span class="grad">feel alive.</span></h1>
     <p class="sub" style="font-size:22px;max-width:500px">A design skill for AI agents. Bilingual, glossy, calm, tested.</p>
   </div>
-  <div class="win rim" style="left:660px;top:120px;width:580px"><div class="bar"><i></i><i></i><i></i><span>halo</span></div><img src="raw/starter_dark_en.png"></div>
-  <div class="phone" style="left:1050px;top:250px;width:190px"><img src="raw/phone_ckb_light.png"></div>
+  <div class="win rim" style="left:660px;top:120px;width:580px"><img src="raw/starter_dark_en.png"></div>
+  <div class="phone" style="left:1058px;top:214px;width:178px"><img src="raw/phone_ckb_light.png"></div>
 </div>
 
 <!-- ================= SHOWCASE: devices ================= -->
 <div data-asset="showcase-devices" class="dark glowbg" style="width:1600px;height:900px">
-  <div class="win rim" style="left:80px;top:80px;width:1120px;--mx:20%;--my:0%"><div class="bar"><i></i><i></i><i></i><span>Daily Focus · starter.html</span></div><img src="raw/starter_dark_en.png"></div>
+  <div class="win rim" style="left:80px;top:80px;width:1120px;--mx:20%;--my:0%"><img src="raw/starter_dark_en.png"></div>
   <div class="phone" style="left:1150px;top:180px;width:330px"><img src="raw/phone_en_dark.png"></div>
 </div>
 
 <!-- ================= SHOWCASE: bilingual ================= -->
 <div data-asset="showcase-bilingual" style="width:1600px;height:640px;background:linear-gradient(90deg,#000 50%,#F5F5F7 50%)">
-  <div class="dark abs" style="inset:0 800px 0 0;background:transparent"><div class="win" style="left:50px;top:90px;width:700px"><div class="bar"><i></i><i></i><i></i><span>English · LTR · dark</span></div><img src="raw/starter_dark_en.png"></div>
+  <div class="dark abs" style="inset:0 800px 0 0;background:transparent"><div class="win" style="left:50px;top:90px;width:700px"><img src="raw/starter_dark_en.png"></div>
     <div class="abs kick" style="left:50px;top:36px;color:var(--greenT)">English · left to right</div></div>
-  <div class="light abs" style="inset:0 0 0 800px;background:transparent"><div class="win" style="left:50px;top:90px;width:700px"><div class="bar"><i></i><i></i><i></i><span>کوردی · RTL · light</span></div><img src="raw/starter_light_ckb.png"></div>
+  <div class="light abs" style="inset:0 0 0 800px;background:transparent"><div class="win" style="left:50px;top:90px;width:700px"><img src="raw/starter_light_ckb.png"></div>
     <div class="abs kick ku" style="right:50px;top:30px;font-size:17px">کوردی · ڕاست بۆ چەپ</div></div>
 </div>
 
@@ -119,8 +117,8 @@ body{background:transparent;margin:0;padding:40px;display:grid;gap:40px;justify-
 
 <!-- ================= SHOWCASE: reference example ================= -->
 <div data-asset="showcase-example" class="light glowbg" style="width:1600px;height:900px">
-  <div class="win rim" style="left:70px;top:70px;width:1060px"><div class="bar"><i></i><i></i><i></i><span>Sawab’s Workout Plan · examples/workout-plan</span></div><img src="raw/example_light_ckb.png"></div>
-  <div class="win" style="left:330px;top:500px;width:620px"><div class="bar"><i></i><i></i><i></i><span>workout</span></div><img src="raw/example_workout_dark.png"></div>
+  <div class="win rim" style="left:70px;top:70px;width:1060px"><img src="raw/example_light_ckb.png"></div>
+  <div class="win" style="left:330px;top:500px;width:620px"><img src="raw/example_workout_dark.png"></div>
   <div class="phone" style="left:1140px;top:120px;width:320px"><img src="raw/example_phone_dark.png"></div>
 </div>
 
@@ -165,7 +163,7 @@ body{background:transparent;margin:0;padding:40px;display:grid;gap:40px;justify-
 <div data-asset="feature-phone" class="tile2">
   <div class="k tone-red">PHONE UX</div><div class="t">Phones aren’t small laptops.</div>
   <div class="d">A quiet 40 px nav with four controls, settings in the menu, swipe between items, haptics, safe areas, a floating timer.</div>
-  <div class="vis" style="overflow:hidden"><div class="phone" style="position:relative;width:250px;margin-top:150px"><img src="raw/phone_en_dark.png"></div></div>
+  <div class="vis" style="overflow:hidden"><div class="phone" style="position:relative;width:250px;margin-top:170px"><img src="raw/phone_en_dark.png"></div></div>
 </div>
 
 <div data-asset="feature-sound" class="tile2">
@@ -205,17 +203,17 @@ body{background:transparent;margin:0;padding:40px;display:grid;gap:40px;justify-
 <!-- ================= KURDISH TYPE ================= -->
 <div data-asset="typography-kurdish" class="dark glowbg ku" style="width:1600px;height:620px;padding:60px 80px">
   <div class="abs" style="right:80px;top:56px;text-align:right;display:grid;gap:14px">
-    <div class="kick" style="justify-content:flex-end;font-family:var(--font-latin),Inter,system-ui,sans-serif">IBM Plex Sans Arabic · Sorani · SIL OFL 1.1</div>
+    <div class="kick" style="justify-content:flex-end;font-family:'IBM Plex Sans Arabic',sans-serif">IBM Plex Sans Arabic · Sorani · SIL OFL 1.1</div>
     <div style="font-size:92px;font-weight:700;line-height:1.25">ئارام، ڕوون، <span class="grad" style="background-image:linear-gradient(270deg,var(--heroA),var(--heroB))">زیندوو.</span></div>
     <div style="font-size:34px;color:var(--ink2);line-height:1.6" id="kuLetters"></div>
   </div>
   <div class="abs" style="right:80px;bottom:60px;display:flex;gap:44px;direction:rtl">
-    <div><div style="font-size:40px;font-weight:400">سڵاو</div><div class="label" style="font-family:var(--font-latin),Inter,system-ui,sans-serif">Regular 400</div></div>
-    <div><div style="font-size:40px;font-weight:500">سڵاو</div><div class="label" style="font-family:var(--font-latin),Inter,system-ui,sans-serif">Medium 500</div></div>
-    <div><div style="font-size:40px;font-weight:600">سڵاو</div><div class="label" style="font-family:var(--font-latin),Inter,system-ui,sans-serif">SemiBold 600</div></div>
-    <div><div style="font-size:40px;font-weight:700">سڵاو</div><div class="label" style="font-family:var(--font-latin),Inter,system-ui,sans-serif">Bold 700</div></div>
+    <div><div style="font-size:40px;font-weight:400">سڵاو</div><div class="label" style="font-family:'IBM Plex Sans Arabic',sans-serif">Regular 400</div></div>
+    <div><div style="font-size:40px;font-weight:500">سڵاو</div><div class="label" style="font-family:'IBM Plex Sans Arabic',sans-serif">Medium 500</div></div>
+    <div><div style="font-size:40px;font-weight:600">سڵاو</div><div class="label" style="font-family:'IBM Plex Sans Arabic',sans-serif">SemiBold 600</div></div>
+    <div><div style="font-size:40px;font-weight:700">سڵاو</div><div class="label" style="font-family:'IBM Plex Sans Arabic',sans-serif">Bold 700</div></div>
   </div>
-  <div class="abs" style="left:80px;bottom:60px;direction:ltr;display:grid;gap:8px;font-family:var(--font-latin),Inter,system-ui,sans-serif">
+  <div class="abs" style="left:80px;bottom:60px;direction:ltr;display:grid;gap:8px;font-family:'IBM Plex Sans Arabic',sans-serif">
     <div class="label">Sorani letters many fonts get wrong</div>
     <div class="ku" style="font-size:54px;font-weight:600;letter-spacing:0;display:flex;gap:22px;direction:rtl"><span class="tone-green">ێ</span><span class="tone-cyan">ۆ</span><span class="tone-red">ڵ</span><span class="tone-green">ڕ</span><span class="tone-cyan">ڤ</span><span class="tone-red">ە</span></div>
   </div>
@@ -227,16 +225,9 @@ body{background:transparent;margin:0;padding:40px;display:grid;gap:40px;justify-
   <div id="picGrid" style="display:grid;grid-template-columns:repeat(8,1fr);gap:26px 22px;margin-top:34px"></div>
 </div>
 
-<!-- ================= LOGO ================= -->
-<div data-asset="logo" style="width:512px;height:512px;background:transparent;color-scheme:dark"><svg class="logo" viewBox="0 0 64 64" style="width:512px;height:512px"></svg></div>
 
 <script src="../../../js/halo.js"></script>
 <script>
-const LOGO=`<defs><linearGradient id="lr" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#FF6A97"/><stop offset="1" stop-color="#FA114F"/></linearGradient><linearGradient id="lg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#D2FF5C"/><stop offset="1" stop-color="#A6FF00"/></linearGradient><linearGradient id="lc" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#7BF3FF"/><stop offset="1" stop-color="#00D8FE"/></linearGradient></defs>
- <circle cx="32" cy="32" r="26" fill="none" stroke="#FA114F" stroke-opacity=".22" stroke-width="8"/><circle cx="32" cy="32" r="26" fill="none" stroke="url(#lr)" stroke-width="8" stroke-linecap="round" stroke-dasharray="122.5 163.4" transform="rotate(-90 32 32)"/>
- <circle cx="32" cy="32" r="16.5" fill="none" stroke="#A6FF00" stroke-opacity=".22" stroke-width="8"/><circle cx="32" cy="32" r="16.5" fill="none" stroke="url(#lg)" stroke-width="8" stroke-linecap="round" stroke-dasharray="85 103.7" transform="rotate(-90 32 32)"/>
- <circle cx="32" cy="32" r="7" fill="none" stroke="#00D8FE" stroke-opacity=".22" stroke-width="6.5"/><circle cx="32" cy="32" r="7" fill="none" stroke="url(#lc)" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="26 44" transform="rotate(-90 32 32)"/>`;
-document.querySelectorAll('svg.logo').forEach(s=>s.innerHTML=LOGO);
 
 document.getElementById('ringsA').innerHTML=Halo.rings([{k:'a',r:100,w:26,c:'red',track:'R',p:.56},{k:'b',r:70,w:26,c:'green',track:'G',p:.5},{k:'c',r:40,w:26,c:'cyan',track:'C',p:.5}],226);
 

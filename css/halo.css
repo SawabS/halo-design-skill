@@ -127,7 +127,7 @@ label.f{display:grid;gap:6px;font-size:14px;font-weight:600;color:var(--ink2)}
 .nav.scrolled{box-shadow:0 1px 0 var(--sep),0 8px 24px light-dark(rgba(0,0,0,.06),rgba(0,0,0,.5))}
 .nav .wrap{display:flex;align-items:center;gap:10px;min-height:var(--nav-h)}
 .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;text-decoration:none;color:var(--ink);white-space:nowrap;margin-inline-end:auto}
-.brand svg{width:30px;height:30px}
+.brand img,.brand svg{width:30px;height:30px}   /* only if the product already owns a mark; Halo never supplies one */
 .links{display:none;gap:2px}
 .links a{padding:8px 11px;border-radius:999px;text-decoration:none;color:var(--ink2);font-size:14.5px;font-weight:600;white-space:nowrap}
 .links a:hover,.links a[aria-current=true]{color:var(--ink);background:var(--sep)}
@@ -245,15 +245,14 @@ dialog.sheet:has(.pill:not([hidden]))>.body{padding-bottom:88px}
   :root{--nav-h:56px}
   .nav .wrap{gap:6px}
   .brand{font-size:16px;gap:8px}
-  .brand svg{width:24px;height:24px}
+  .brand img,.brand svg{width:24px;height:24px}
   .acts{gap:2px}
   .acts .btn.ic,.acts .gh{width:40px;min-height:40px;height:40px;padding:0;justify-content:center;border:0;background:transparent;color:var(--ink2);border-radius:12px}
   .acts .btn.ic:hover,.acts .gh:hover,.acts .btn.ic:active,.acts .gh:active,.acts .btn.ic[aria-expanded=true]{background:var(--sep);color:var(--ink)}
   .acts .lang{min-height:32px;height:32px;padding:0 12px;margin-inline-end:4px;font-size:13px;border:0;background:var(--sep);color:var(--ink)}
 }
 @media(max-width:360px){.brand{font-size:15px}.acts .btn.ic,.acts .gh{width:38px}}
-@media(max-width:340px){.brand{font-size:14px;gap:6px}.acts .lang{padding:0 9px;margin-inline-end:2px}
-  .brand span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}  /* logo only; name stays for screen readers */
+@media(max-width:340px){.brand{font-size:13.5px;gap:6px;white-space:normal;line-height:1.15;max-width:7.5em}.acts .lang{padding:0 9px;margin-inline-end:2px}}  /* long names wrap to two lines */
 
 /* ---------- 11. RTL (Sorani, Arabic, Persian) ---------- */
 :root[dir=rtl] h1,:root[dir=rtl] h2,:root[dir=rtl] h3{letter-spacing:0;line-height:1.3}
