@@ -121,6 +121,6 @@ HTML at the exact paper size → `scripts/print_pdf.py` → `qpdf` merge → `sc
 | `icons/` | UI icons, glyphs, pictograms, grammar, gallery |
 | `docs/` | 01 principles · 02 colour · 03 type · 04 layout · 05 components · 06 motion · 07 phone · 08 RTL · 09 icons · 10 data viz · 11 print · 12 a11y · 13 QA · 14 sound · 15 Figma · 16 libraries · 17 frameworks |
 | `qa/` | Layout and touch test suites (Playwright) |
-| `scripts/` | `print_pdf.py`, `verify_pdf.sh`, `build_tokens.py` |
+| `scripts/` | `print_pdf.py`, `verify_pdf.sh`, `build_tokens.py`, `render_assets.py` |
 | `fonts/` | IBM Plex Sans Arabic and Inter (TrueType, OFL) for offline and print use |
 | `examples/workout-plan/` | The full reference product: interactive site + 4 vector PDFs (EN/KU × dark/light) |

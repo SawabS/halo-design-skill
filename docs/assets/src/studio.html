@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Halo · asset studio</title>
+<!-- Every [data-asset] element below is one image in docs/assets/. Render with scripts/render_assets.py -->
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../tokens/tokens.css">
+<link rel="stylesheet" href="../../../css/halo.css">
+<style>
+@font-face{font-family:"IBM Plex Sans Arabic";src:url(../../../fonts/ibm-plex-sans-arabic/IBMPlexSansArabic-Regular.ttf);font-weight:400}
+@font-face{font-family:"IBM Plex Sans Arabic";src:url(../../../fonts/ibm-plex-sans-arabic/IBMPlexSansArabic-Medium.ttf);font-weight:500}
+@font-face{font-family:"IBM Plex Sans Arabic";src:url(../../../fonts/ibm-plex-sans-arabic/IBMPlexSansArabic-SemiBold.ttf);font-weight:600}
+@font-face{font-family:"IBM Plex Sans Arabic";src:url(../../../fonts/ibm-plex-sans-arabic/IBMPlexSansArabic-Bold.ttf);font-weight:700 900}
+body{background:transparent;margin:0;padding:40px;display:grid;gap:40px;justify-items:start;font-family:var(--font)}
+[data-asset]{position:relative;overflow:hidden;flex:none}
+.dark{color-scheme:dark;background:#000;color:var(--ink)}
+.light{color-scheme:light;background:#F5F5F7;color:var(--ink)}
+.ku{font-family:var(--font-arabic),var(--font-latin),sans-serif;direction:rtl}
+.glowbg::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(620px 420px at 12% 8%,color-mix(in srgb,var(--green) 20%,transparent),transparent 70%),
+             radial-gradient(700px 480px at 92% 96%,color-mix(in srgb,var(--cyan) 18%,transparent),transparent 70%),
+             radial-gradient(500px 300px at 70% 0%,color-mix(in srgb,var(--red) 10%,transparent),transparent 70%)}
+.light.glowbg::before{background:radial-gradient(620px 420px at 12% 8%,color-mix(in srgb,var(--green) 16%,transparent),transparent 70%),
+             radial-gradient(700px 480px at 92% 96%,color-mix(in srgb,var(--cyan) 16%,transparent),transparent 70%)}
+.abs{position:absolute}
+/* ---- device frames ---- */
+.win{position:absolute;border-radius:16px;overflow:hidden;border:1px solid var(--rim);background:var(--card);
+  box-shadow:0 30px 80px rgba(0,0,0,.45),0 8px 20px rgba(0,0,0,.25)}
+.light .win{box-shadow:0 30px 70px rgba(0,0,0,.14),0 6px 16px rgba(0,0,0,.08)}
+.win .bar{height:34px;display:flex;align-items:center;gap:7px;padding:0 14px;background:light-dark(#E9E9EE,#1B1B1F);border-bottom:1px solid var(--sep)}
+.win .bar i{width:11px;height:11px;border-radius:50%;background:#FF5F57}.win .bar i:nth-child(2){background:#FEBC2E}.win .bar i:nth-child(3){background:#28C840}
+.win .bar span{margin:0 auto;font-size:12px;color:var(--ink3);background:light-dark(#fff,#0E0E10);padding:3px 14px;border-radius:7px;font-weight:600;transform:translateX(-20px)}
+.win img{display:block;width:100%}
+.phone{position:absolute;border-radius:56px;padding:11px;background:linear-gradient(145deg,#2a2a2e,#0b0b0c 40%,#1a1a1d);box-shadow:0 0 0 1.5px rgba(255,255,255,.14) inset,0 40px 90px rgba(0,0,0,.5),0 10px 24px rgba(0,0,0,.3)}
+.light .phone{box-shadow:0 0 0 1.5px rgba(255,255,255,.14) inset,0 36px 70px rgba(0,0,0,.18),0 8px 18px rgba(0,0,0,.1)}
+.phone img{display:block;width:100%;border-radius:46px}
+.phone::after{content:"";position:absolute;top:22px;left:50%;width:30%;height:26px;margin-left:-15%;background:#000;border-radius:20px}
+/* static rim light on frames */
+.rim::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1.5px;z-index:3;pointer-events:none;
+  background:radial-gradient(380px circle at var(--mx,85%) var(--my,0%),var(--shine),var(--shineT) 35%,transparent 70%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+/* ---- type ---- */
+.kick{font-size:15px;font-weight:700;color:var(--greenT);display:flex;gap:10px;align-items:center}
+.kick svg{width:30px;height:30px}
+.h{font-weight:700;letter-spacing:-.04em;line-height:.98;margin:0}
+.sub{color:var(--ink2);font-size:19px;line-height:1.5}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips .chip{min-height:32px;font-size:14px;padding:4px 14px}
+/* ---- feature tiles ---- */
+.tile2{width:760px;height:460px;border-radius:30px;background:linear-gradient(180deg,#141417,#0A0A0B);border:1px solid rgba(255,255,255,.1);color-scheme:dark;color:var(--ink);padding:34px 36px}
+.tile2 .t{font-size:30px;font-weight:700;letter-spacing:-.03em;line-height:1.1;margin-top:8px;max-width:330px}
+.tile2 .d{color:var(--ink2);font-size:15.5px;line-height:1.5;margin-top:10px;max-width:310px}
+.tile2 .k{font-size:13px;font-weight:700;letter-spacing:.02em}
+.tile2 .vis{position:absolute;inset:0 0 0 auto;width:400px;display:grid;place-items:center}
+.sw{display:grid;gap:6px;justify-items:start}
+.sw i{display:block;width:60px;height:60px;border-radius:16px;border:1px solid var(--rim)}
+.sw b{font-size:12px;font-weight:700}.sw small{font-size:11px;color:var(--ink3);font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+
+<!-- ================= BANNER (dark) ================= -->
+<div data-asset="banner-dark" class="dark glowbg" style="width:1280px;height:640px">
+  <div class="abs" style="left:72px;top:92px;width:520px;display:grid;gap:24px">
+    <div class="kick"><svg class="logo" viewBox="0 0 64 64"></svg>HALO · DESIGN SKILL FOR AI AGENTS</div>
+    <h1 class="h" style="font-size:78px">Interfaces that<br><span class="grad">feel alive.</span></h1>
+    <p class="sub" style="max-width:470px">Rings, rim-lit cards, quiet motion and calm sound. Dark and light, English and <span class="ku" style="direction:rtl;unicode-bidi:isolate">کوردی</span>, phone to laptop, and true vector PDF.</p>
+    <div class="chips"><span class="chip green">Agent-ready</span><span class="chip cyan">LTR + RTL</span><span class="chip red">Vector PDF</span><span class="chip">Platform-first</span></div>
+  </div>
+  <div class="win rim" style="left:640px;top:96px;width:600px;--mx:90%;--my:0%"><div class="bar"><i></i><i></i><i></i><span>halo · starter</span></div><img src="raw/starter_dark_en.png"></div>
+  <div class="phone" style="left:1046px;top:236px;width:196px"><img src="raw/phone_ckb_light.png"></div>
+</div>
+
+<!-- ================= BANNER (light) ================= -->
+<div data-asset="banner-light" class="light glowbg" style="width:1280px;height:640px">
+  <div class="abs" style="left:72px;top:92px;width:520px;display:grid;gap:24px">
+    <div class="kick"><svg class="logo" viewBox="0 0 64 64"></svg>HALO · DESIGN SKILL FOR AI AGENTS</div>
+    <h1 class="h" style="font-size:78px">Interfaces that<br><span class="grad">feel alive.</span></h1>
+    <p class="sub" style="max-width:470px">Rings, rim-lit cards, quiet motion and calm sound. Dark and light, English and <span class="ku" style="direction:rtl;unicode-bidi:isolate">کوردی</span>, phone to laptop, and true vector PDF.</p>
+    <div class="chips"><span class="chip green">Agent-ready</span><span class="chip cyan">LTR + RTL</span><span class="chip red">Vector PDF</span><span class="chip">Platform-first</span></div>
+  </div>
+  <div class="win rim" style="left:640px;top:96px;width:600px;--mx:90%;--my:0%"><div class="bar"><i></i><i></i><i></i><span>halo · starter</span></div><img src="raw/starter_light_en.png"></div>
+  <div class="phone" style="left:1046px;top:236px;width:196px"><img src="raw/phone_ckb_dark.png"></div>
+</div>
+
+<!-- ================= SOCIAL PREVIEW (1280×640, rendered at 1x for GitHub) ================= -->
+<div data-asset="social-preview" class="dark glowbg" style="width:1280px;height:640px">
+  <div class="abs" style="left:72px;top:110px;width:540px;display:grid;gap:26px">
+    <div class="kick" style="font-size:17px"><svg class="logo" viewBox="0 0 64 64" style="width:40px;height:40px"></svg>halo-design-skill</div>
+    <h1 class="h" style="font-size:72px">Interfaces that<br><span class="grad">feel alive.</span></h1>
+    <p class="sub" style="font-size:22px;max-width:500px">A design skill for AI agents. Bilingual, glossy, calm, tested.</p>
+  </div>
+  <div class="win rim" style="left:660px;top:120px;width:580px"><div class="bar"><i></i><i></i><i></i><span>halo</span></div><img src="raw/starter_dark_en.png"></div>
+  <div class="phone" style="left:1050px;top:250px;width:190px"><img src="raw/phone_ckb_light.png"></div>
+</div>
+
+<!-- ================= SHOWCASE: devices ================= -->
+<div data-asset="showcase-devices" class="dark glowbg" style="width:1600px;height:900px">
+  <div class="win rim" style="left:80px;top:80px;width:1120px;--mx:20%;--my:0%"><div class="bar"><i></i><i></i><i></i><span>Daily Focus · starter.html</span></div><img src="raw/starter_dark_en.png"></div>
+  <div class="phone" style="left:1150px;top:180px;width:330px"><img src="raw/phone_en_dark.png"></div>
+</div>
+
+<!-- ================= SHOWCASE: bilingual ================= -->
+<div data-asset="showcase-bilingual" style="width:1600px;height:640px;background:linear-gradient(90deg,#000 50%,#F5F5F7 50%)">
+  <div class="dark abs" style="inset:0 800px 0 0;background:transparent"><div class="win" style="left:50px;top:90px;width:700px"><div class="bar"><i></i><i></i><i></i><span>English · LTR · dark</span></div><img src="raw/starter_dark_en.png"></div>
+    <div class="abs kick" style="left:50px;top:36px;color:var(--greenT)">English · left to right</div></div>
+  <div class="light abs" style="inset:0 0 0 800px;background:transparent"><div class="win" style="left:50px;top:90px;width:700px"><div class="bar"><i></i><i></i><i></i><span>کوردی · RTL · light</span></div><img src="raw/starter_light_ckb.png"></div>
+    <div class="abs kick ku" style="right:50px;top:30px;font-size:17px">کوردی · ڕاست بۆ چەپ</div></div>
+</div>
+
+<!-- ================= SHOWCASE: phones ================= -->
+<div data-asset="showcase-phones" class="dark glowbg" style="width:1600px;height:860px">
+  <div class="phone" style="left:90px;top:70px;width:320px"><img src="raw/phone_en_dark.png"></div>
+  <div class="phone" style="left:450px;top:70px;width:320px"><img src="raw/phone_ckb_light.png"></div>
+  <div class="phone" style="left:830px;top:70px;width:320px"><img src="raw/phone_en_light.png"></div>
+  <div class="phone" style="left:1190px;top:70px;width:320px"><img src="raw/phone_ckb_dark.png"></div>
+</div>
+
+<!-- ================= SHOWCASE: reference example ================= -->
+<div data-asset="showcase-example" class="light glowbg" style="width:1600px;height:900px">
+  <div class="win rim" style="left:70px;top:70px;width:1060px"><div class="bar"><i></i><i></i><i></i><span>Sawab’s Workout Plan · examples/workout-plan</span></div><img src="raw/example_light_ckb.png"></div>
+  <div class="win" style="left:330px;top:500px;width:620px"><div class="bar"><i></i><i></i><i></i><span>workout</span></div><img src="raw/example_workout_dark.png"></div>
+  <div class="phone" style="left:1140px;top:120px;width:320px"><img src="raw/example_phone_dark.png"></div>
+</div>
+
+<!-- ================= PRINT ================= -->
+<div data-asset="showcase-print" class="dark glowbg" style="width:1600px;height:1000px">
+  <div class="abs kick" style="left:70px;top:44px">Vector PDF · 0 raster images · embedded fonts · live source links</div>
+  <img class="abs" src="raw/pdf_dark-01.png" style="left:70px;top:90px;width:715px;border-radius:10px;box-shadow:0 30px 70px rgba(0,0,0,.6);outline:1px solid rgba(255,255,255,.12)">
+  <img class="abs" src="raw/pdf_ckb_light-01.png" style="left:815px;top:90px;width:715px;border-radius:10px;box-shadow:0 30px 70px rgba(0,0,0,.6)">
+  <div class="abs" style="left:70px;top:620px;display:flex;gap:18px">
+    <img src="raw/pdf_dark-02.png" style="width:225px;border-radius:8px;outline:1px solid rgba(255,255,255,.12)"><img src="raw/pdf_dark-04.png" style="width:225px;border-radius:8px;outline:1px solid rgba(255,255,255,.12)"><img src="raw/pdf_dark-06.png" style="width:225px;border-radius:8px;outline:1px solid rgba(255,255,255,.12)">
+    <img src="raw/pdf_ckb_light-02.png" style="width:225px;border-radius:8px"><img src="raw/pdf_ckb_light-04.png" style="width:225px;border-radius:8px"><img src="raw/pdf_ckb_light-06.png" style="width:225px;border-radius:8px">
+  </div>
+</div>
+
+<!-- ================= FEATURE TILES ================= -->
+<div data-asset="feature-rim-light" class="tile2">
+  <div class="k tone-cyan">MOTION &amp; LIGHT</div><div class="t">Light follows your hand.</div>
+  <div class="d">A rim of light runs along the card edge toward the cursor. On phones it glints where your finger lands. One easing curve, off under reduced motion.</div>
+  <div class="vis"><div class="card lit tilt" style="width:300px;--mx:250px;--my:6px;--rx:2deg;--ry:3deg;transform:perspective(1100px) rotateX(2deg) rotateY(3deg) translateY(-3px)">
+    <div class="label">Focus</div><div class="stat"><div class="v tone-red" style="padding:0;margin-top:6px">50 / 90 min</div></div>
+    <div class="meter mt14"><i style="width:56%;background:linear-gradient(90deg,var(--red2),var(--red))"></i></div>
+    <div class="row between mt14"><span class="chip red">Deep work</span><span class="mut" style="font-size:13px">2 of 3 blocks</span></div></div>
+    <svg class="abs" style="left:300px;top:118px;width:26px" viewBox="0 0 24 24"><path d="M4 2l15 9-6.5 1.5L16 20l-3 1.5-3.5-7.5L4 19z" fill="#fff" stroke="#000" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
+</div>
+
+<div data-asset="feature-rings" class="tile2">
+  <div class="k tone-green">NUMBERS FIRST</div><div class="t">Rings that repeat the number.</div>
+  <div class="d">Big accent numbers with a grey label above and a plain sentence below. Rings and bars show the same value, never replace it.</div>
+  <div class="vis"><div style="display:grid;grid-template-columns:200px 150px;gap:18px;align-items:center"><div id="ringsA"></div>
+    <div style="display:grid;gap:14px"><div><div class="label">Move</div><div style="font-size:26px;font-weight:700" class="tone-red">50/90</div></div><div><div class="label">Tasks</div><div style="font-size:26px;font-weight:700" class="tone-green">3/6</div></div><div><div class="label">Breaks</div><div style="font-size:26px;font-weight:700" class="tone-cyan">2/4</div></div></div></div></div>
+</div>
+
+<div data-asset="feature-bilingual" class="tile2">
+  <div class="k tone-green">ENGLISH · کوردی</div><div class="t">Right-to-left is first class.</div>
+  <div class="d">IBM Plex Sans Arabic, logical properties, mirrored charts and timers, Sorani dates, and bidi rules for mixed text.</div>
+  <div class="vis" style="gap:14px;align-content:center">
+    <div class="card" style="width:330px;padding:16px 18px"><div class="label">Today · Friday 20 November</div><div style="font-size:24px;font-weight:700;letter-spacing:-.03em;margin-top:4px">Close the <span class="grad">rings.</span></div></div>
+    <div class="card ku" style="width:330px;padding:14px 18px;text-align:right"><div class="label">ئەمڕۆ · هەینی، 20 تشرینی دووەم</div><div style="font-size:24px;font-weight:700;margin-top:2px;line-height:1.3">بازنەکان <span class="grad" style="background-image:linear-gradient(270deg,var(--heroA),var(--heroB))">دابخە.</span></div></div>
+  </div>
+</div>
+
+<div data-asset="feature-phone" class="tile2">
+  <div class="k tone-red">PHONE UX</div><div class="t">Phones aren’t small laptops.</div>
+  <div class="d">A quiet 40 px nav with four controls, settings in the menu, swipe between items, haptics, safe areas, a floating timer.</div>
+  <div class="vis" style="overflow:hidden"><div class="phone" style="position:relative;width:250px;margin-top:150px"><img src="raw/phone_en_dark.png"></div></div>
+</div>
+
+<div data-asset="feature-sound" class="tile2">
+  <div class="k tone-cyan">CALM SOUND</div><div class="t">Sound that settles you.</div>
+  <div class="d">Music-box notes, singing bowls, water drops and a breathing pad, synthesized live in one pentatonic key. No files. One toggle.</div>
+  <div class="vis"><svg id="soundViz" width="370" height="330" viewBox="0 0 370 330"></svg></div>
+</div>
+
+<div data-asset="feature-print" class="tile2">
+  <div class="k tone-amber">PRINT</div><div class="t">True vector PDF.</div>
+  <div class="d">Posters and guides from HTML: real text, embedded fonts, live links, vector shadows, RTL auto-fit, zero raster images.</div>
+  <div class="vis"><div style="position:relative;width:360px;height:360px">
+    <img class="abs" src="raw/pdf_ckb_light-03.png" style="width:170px;left:170px;top:70px;transform:rotate(6deg);border-radius:6px;box-shadow:0 20px 40px rgba(0,0,0,.6)">
+    <img class="abs" src="raw/pdf_dark-02.png" style="width:170px;left:30px;top:40px;transform:rotate(-5deg);border-radius:6px;box-shadow:0 20px 40px rgba(0,0,0,.6);outline:1px solid rgba(255,255,255,.14)">
+    <span class="chip green abs" style="left:80px;top:300px">0 raster images</span></div></div>
+</div>
+
+<div data-asset="feature-tokens" class="tile2">
+  <div class="k tone-green">TOKENS</div><div class="t">One source of truth.</div>
+  <div class="d">Every colour written once with light-dark(), exported as DTCG 2025.10 JSON for Figma, Style Dictionary and native apps.</div>
+  <div class="vis"><div style="display:grid;grid-template-columns:repeat(4,72px);gap:14px 12px" id="tokSw"></div></div>
+</div>
+
+<div data-asset="feature-qa" class="tile2">
+  <div class="k tone-red">QA</div><div class="t">Tested until it won’t break.</div>
+  <div class="d">9 widths × 2 themes × 2 languages, phone touch suites, and 606 scripted interactions on the reference app.</div>
+  <div class="vis"><div><div id="qaGrid" style="display:grid;grid-template-columns:54px repeat(4,46px);gap:6px;align-items:center"></div>
+    <div class="row mt14" style="gap:10px"><span class="chip green">606 / 606</span><span class="chip cyan">0 overflow</span></div></div></div>
+</div>
+
+<!-- ================= PALETTE ================= -->
+<div data-asset="palette" style="width:1600px;display:grid;grid-template-columns:1fr 1fr">
+  <div class="dark" style="padding:48px 52px" id="palDark"></div>
+  <div class="light" style="padding:48px 52px" id="palLight"></div>
+</div>
+
+<!-- ================= KURDISH TYPE ================= -->
+<div data-asset="typography-kurdish" class="dark glowbg ku" style="width:1600px;height:620px;padding:60px 80px">
+  <div class="abs" style="right:80px;top:56px;text-align:right;display:grid;gap:14px">
+    <div class="kick" style="justify-content:flex-end;font-family:var(--font-latin),Inter,system-ui,sans-serif">IBM Plex Sans Arabic · Sorani · SIL OFL 1.1</div>
+    <div style="font-size:92px;font-weight:700;line-height:1.25">ئارام، ڕوون، <span class="grad" style="background-image:linear-gradient(270deg,var(--heroA),var(--heroB))">زیندوو.</span></div>
+    <div style="font-size:34px;color:var(--ink2);line-height:1.6" id="kuLetters"></div>
+  </div>
+  <div class="abs" style="right:80px;bottom:60px;display:flex;gap:44px;direction:rtl">
+    <div><div style="font-size:40px;font-weight:400">سڵاو</div><div class="label" style="font-family:var(--font-latin),Inter,system-ui,sans-serif">Regular 400</div></div>
+    <div><div style="font-size:40px;font-weight:500">سڵاو</div><div class="label" style="font-family:var(--font-latin),Inter,system-ui,sans-serif">Medium 500</div></div>
+    <div><div style="font-size:40px;font-weight:600">سڵاو</div><div class="label" style="font-family:var(--font-latin),Inter,system-ui,sans-serif">SemiBold 600</div></div>
+    <div><div style="font-size:40px;font-weight:700">سڵاو</div><div class="label" style="font-family:var(--font-latin),Inter,system-ui,sans-serif">Bold 700</div></div>
+  </div>
+  <div class="abs" style="left:80px;bottom:60px;direction:ltr;display:grid;gap:8px;font-family:var(--font-latin),Inter,system-ui,sans-serif">
+    <div class="label">Sorani letters many fonts get wrong</div>
+    <div class="ku" style="font-size:54px;font-weight:600;letter-spacing:0;display:flex;gap:22px;direction:rtl"><span class="tone-green">ێ</span><span class="tone-cyan">ۆ</span><span class="tone-red">ڵ</span><span class="tone-green">ڕ</span><span class="tone-cyan">ڤ</span><span class="tone-red">ە</span></div>
+  </div>
+</div>
+
+<!-- ================= PICTOGRAMS ================= -->
+<div data-asset="pictograms" class="dark" style="width:1600px;height:640px;padding:56px 64px">
+  <div class="kick">Pictogram grammar · ghost start pose → ink end pose · one accent · knock-outs</div>
+  <div id="picGrid" style="display:grid;grid-template-columns:repeat(8,1fr);gap:26px 22px;margin-top:34px"></div>
+</div>
+
+<!-- ================= LOGO ================= -->
+<div data-asset="logo" style="width:512px;height:512px;background:transparent;color-scheme:dark"><svg class="logo" viewBox="0 0 64 64" style="width:512px;height:512px"></svg></div>
+
+<script src="../../../js/halo.js"></script>
+<script>
+const LOGO=`<defs><linearGradient id="lr" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#FF6A97"/><stop offset="1" stop-color="#FA114F"/></linearGradient><linearGradient id="lg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#D2FF5C"/><stop offset="1" stop-color="#A6FF00"/></linearGradient><linearGradient id="lc" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#7BF3FF"/><stop offset="1" stop-color="#00D8FE"/></linearGradient></defs>
+ <circle cx="32" cy="32" r="26" fill="none" stroke="#FA114F" stroke-opacity=".22" stroke-width="8"/><circle cx="32" cy="32" r="26" fill="none" stroke="url(#lr)" stroke-width="8" stroke-linecap="round" stroke-dasharray="122.5 163.4" transform="rotate(-90 32 32)"/>
+ <circle cx="32" cy="32" r="16.5" fill="none" stroke="#A6FF00" stroke-opacity=".22" stroke-width="8"/><circle cx="32" cy="32" r="16.5" fill="none" stroke="url(#lg)" stroke-width="8" stroke-linecap="round" stroke-dasharray="85 103.7" transform="rotate(-90 32 32)"/>
+ <circle cx="32" cy="32" r="7" fill="none" stroke="#00D8FE" stroke-opacity=".22" stroke-width="6.5"/><circle cx="32" cy="32" r="7" fill="none" stroke="url(#lc)" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="26 44" transform="rotate(-90 32 32)"/>`;
+document.querySelectorAll('svg.logo').forEach(s=>s.innerHTML=LOGO);
+
+document.getElementById('ringsA').innerHTML=Halo.rings([{k:'a',r:100,w:26,c:'red',track:'R',p:.56},{k:'b',r:70,w:26,c:'green',track:'G',p:.5},{k:'c',r:40,w:26,c:'cyan',track:'C',p:.5}],226);
+
+/* sound: pentatonic music-box notes climbing + a singing-bowl decay */
+(()=>{const s=document.getElementById('soundViz');let g='<defs><linearGradient id="sg" x1="0" x2="1"><stop offset="0" style="stop-color:var(--heroA)"/><stop offset="1" style="stop-color:var(--heroB)"/></linearGradient></defs>';
+ const steps=[0,1,2,4,5,7,8];steps.forEach((n,i)=>{const x=34+i*46,y=170-n*16;g+=`<line x1="${x}" x2="${x}" y1="${y+16}" y2="200" style="stroke:var(--sep)" stroke-width="2"/><circle cx="${x}" cy="${y}" r="${11-i*.4}" fill="url(#sg)" opacity="${.55+i*.06}"/>`});
+ let d='M14 270';for(let x=0;x<=340;x+=2){const a=34*Math.exp(-x/120);d+=` L${14+x} ${270+a*Math.sin(x/7.5)}`}g+=`<path d="${d}" fill="none" stroke="url(#sg)" stroke-width="2.6" stroke-linecap="round"/>`;
+ g+=`<text x="16" y="226" style="fill:var(--ink3);font:600 12.5px var(--font)">music box · climbs the scale as you tick</text><text x="16" y="326" style="fill:var(--ink3);font:600 12.5px var(--font)">singing bowl · 6 s tail, D major pentatonic</text>`;s.innerHTML=g})();
+
+/* token swatches */
+document.getElementById('tokSw').innerHTML=['green','cyan','red','amber','green2','cyan2','red2','amber2','trackG','trackC','trackR','ink3'].map(k=>`<div class="sw"><i style="background:var(--${k})"></i><b>--${k}</b></div>`).join('');
+
+/* QA grid */
+(()=>{const w=[320,360,390,430,720,800,1024,1280,1440];let h='<span></span>'+['D·EN','D·KU','L·EN','L·KU'].map(c=>`<span class="label" style="text-align:center;font-size:11px">${c}</span>`).join('');
+ w.forEach(x=>{h+=`<span class="label" style="font-size:11px">${x}</span>`;for(let i=0;i<4;i++)h+=`<span style="height:22px;border-radius:7px;background:var(--chipG);display:grid;place-items:center">${Halo.icons.check.replace('<svg','<svg width="13" height="13" stroke="#0A0A0A"')}</span>`});document.getElementById('qaGrid').innerHTML=h})();
+
+/* palette panels with resolved hex */
+function hex(c){const m=c.match(/[\d.]+/g);if(!m)return c;const [r,g,b,a]=m.map(Number);const h='#'+[r,g,b].map(v=>Math.round(v).toString(16).padStart(2,'0')).join('').toUpperCase();return a!==undefined&&a<1?h+' · '+Math.round(a*100)+'%':h}
+function panel(id,title){const el=document.getElementById(id);const rows=[['Surfaces & ink',['bg','card','well','rim','ink','ink2','ink3','sep']],['Green · strength, done',['green','green2','greenT','trackG']],['Cyan · steps, info',['cyan','cyan2','cyanT','trackC']],['Red · recovery, attention',['red','red2','redT','trackR']],['Amber · caution',['amber','amber2','amberT']]];
+ el.innerHTML=`<div class="kick" style="margin-bottom:20px">${title}</div>`+rows.map(([t,ks])=>`<div style="margin-bottom:16px"><div class="label" style="margin-bottom:8px">${t}</div><div style="display:flex;gap:10px">${ks.map(k=>`<div class="sw" style="width:74px"><i data-k="${k}" style="background:var(--${k});width:74px;height:46px;border-radius:12px"></i><b>--${k}</b><small></small></div>`).join('')}</div></div>`).join('');
+ el.querySelectorAll('i[data-k]').forEach(i=>i.nextElementSibling.nextElementSibling.textContent=hex(getComputedStyle(i).backgroundColor))}
+panel('palDark','Dark theme');panel('palLight','Light theme');
+
+/* Kurdish alphabet */
+document.getElementById('kuLetters').innerHTML='ئ ا ب پ ت ج چ ح خ د ر <b class="tone-green">ڕ</b> ز ژ س ش ع غ ف <b class="tone-green">ڤ</b> ق ک گ ل <b class="tone-green">ڵ</b> م ن و <b class="tone-green">ۆ</b> ھ <b class="tone-green">ە</b> ی <b class="tone-green">ێ</b>';
+
+/* pictograms + glyphs */
+(async()=>{const pics=['goblet_squat','floor_press','single_arm_row','rdl','overhead_press','farmers_carry','walk','doorway_chest','childs_pose','worlds_greatest','seated_hamstring','calf_stretch'];
+ const red=new Set(['doorway_chest','childs_pose','worlds_greatest','seated_hamstring','calf_stretch']);
+ const glyphs=['scale','shoe','watch','moon'];let h='';
+ for(const p of pics){const t=await (await fetch('../../../icons/pictograms/'+p+'.svg')).text();h+=`<div style="display:grid;justify-items:center;gap:8px"><div class="pic ${red.has(p)?'red':''}" style="width:150px;height:150px;border-radius:32px">${t}</div><span class="label">${p.replace(/_/g,' ')}</span></div>`}
+ for(const g of glyphs){try{const r=await fetch('../../../icons/glyphs/'+g+'.svg');if(!r.ok)continue;const t=await r.text();h+=`<div style="display:grid;justify-items:center;gap:8px"><div style="width:150px;height:150px;border-radius:32px;display:grid;place-items:center;background:linear-gradient(var(--tA),var(--tB));border:1px solid var(--rim);color:var(--greenT)">${t.replace('<svg','<svg width="64" height="64"')}</div><span class="label">${g}</span></div>`}catch(e){}}
+ document.getElementById('picGrid').innerHTML=h;document.body.dataset.ready=1})();
+</script>
+</body>
+</html>
