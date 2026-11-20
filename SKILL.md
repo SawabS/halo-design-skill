@@ -1,127 +1,88 @@
 ---
 name: halo-design
-description: Halo, a calm, glossy, bilingual (English + Kurdish Sorani / any RTL script) design system for web apps, dashboards, trackers, landing pages and vector PDF posters or guides. Use it when a UI should feel Apple-Fitness-like (activity rings, rim-lit cards, big accent numbers, dark and light themes), when the product needs Kurdish, Arabic or Persian alongside English, or when the user asks for "the Halo style". It ships tokens, CSS components, a dependency-free runtime (motion, theming, i18n, dialogs, timer, swipe, haptics), synthesized calm UI sound, an icon grammar, a vector-PDF pipeline and a QA protocol. Everything maps to web standards or named production libraries, so nothing is invented.
+description: Halo, a calm, glossy, numbers-first design system for any web app, dashboard, tool, landing page or vector PDF, bilingual by design (English + Kurdish Sorani or any RTL script). Use it when the user asks for the Halo style, wants a polished dark/light interface that feels alive (rim-lit cards, quiet motion, optional calm sound), needs Kurdish, Arabic or Persian alongside English, or wants print-ready vector PDFs. The agent writes a short design brief and invents a product-specific signature visual, accent meanings and illustration language inside fixed rules (tokens, type, motion, accessibility, QA). Built only on web standards and named production libraries, and reproducible end to end.
 ---
 
 # Halo design skill
 
-Halo turns a product brief into a calm, glossy, data-forward interface that works in dark and light, English and Kurdish, phone and laptop, and that prints to true vector PDF. Follow this file top to bottom; open a doc only when its step comes up.
+Halo is a **way of designing**, not a theme to copy. It fixes the grammar (tokens, type, motion, accessibility, bilingual layout, QA) and leaves the product's character to you: its signature visual, accent meanings, illustrations, copy and sound. The workout plan in `examples/` and the two templates are demonstrations of the mechanics, not content to reuse.
 
-## Ground rules (read once, apply always)
-1. **Platform → Halo → proven library. Never invent.** Use the web platform first, then Halo's code, then the production library named in [`docs/16-libraries.md`](docs/16-libraries.md). Don't write a new animation engine, scroller, icon set, synth or dialog from memory.
-2. **Tokens are the only source of colour, curve and radius.** No hex codes or cubic-beziers in components. See [`tokens/tokens.css`](tokens/tokens.css).
-3. **Both themes, both directions, every breakpoint** are designed and tested; none is an afterthought.
-4. **Numbers are the headline.** A few big accent numbers, each with a grey label above and a plain sentence below; rings and bars repeat them.
-5. **Motion is light.** One curve (`--ease`), reveal once, nothing loops, everything respects reduced motion.
-6. **No logos.** The brand slot is the product's own name in text. Never draw, invent or add a logo or mark; use one only if the user supplies it.
-7. **Done means QA passed** ([`docs/13-qa.md`](docs/13-qa.md)).
+## Ground rules
+1. **Design per product.** Write the brief first ([`templates/brief.md`](templates/brief.md)) and choose a signature visual that fits *this* product ([`docs/00-creative-direction.md`](docs/00-creative-direction.md)). Rings, exercise pictograms and workout copy are wrong unless the product is about closing daily goals.
+2. **Platform → Halo → proven library. Never invent mechanisms** ([`docs/16-libraries.md`](docs/16-libraries.md)).
+3. **Tokens are the only source of colour, curve and radius.** No colour literals outside `tokens/tokens.css`; `scripts/check_skill.py` enforces this for Halo's CSS.
+4. **Both themes, both directions, every breakpoint** are designed and tested.
+5. **Numbers first:** grey label → big accent value → plain sentence. Visuals repeat the number, never replace it.
+6. **Motion is light:** one curve, reveal once, nothing loops, reduced-motion safe. Live data updates in place and never re-animates.
+7. **No logos.** The brand slot is the product's name in text. Use a mark only if the user supplies one.
+8. **Done means QA passed** ([`docs/13-qa.md`](docs/13-qa.md)).
+
+## Read only what the task needs
+The docs are short (under 1,500 tokens each). Don't read everything; route by task:
+
+| Task | Read | Start from |
+|---|---|---|
+| Any new product or page | `docs/00`, `docs/02`, `docs/03`, `docs/05` | `templates/starter.html` (personal app) or `templates/dashboard.html` (data / ops) |
+| Data-heavy screen | `docs/10`, `docs/04` | `templates/dashboard.html` |
+| Kurdish / Arabic / Persian | `docs/08`, `docs/03` | either template with `lang=ckb` |
+| Phone polish | `docs/07` | — |
+| Motion, rim light, scroll | `docs/06` | — |
+| Sound | `docs/14` | `js/halo-sound.js` |
+| Icons or illustrations | `icons/README.md`, `docs/09` | `icons/` |
+| Printed document or PDF | `docs/11` | `templates/print-a4.html` |
+| React / Next / Tailwind / Vue | `docs/17` | — |
+| Choosing a library | `docs/16` | — |
+| Figma or design tokens for other tools | `docs/15`, `tokens/*.tokens.json` | — |
+| Accessibility | `docs/12` | — |
+| Testing | `docs/13` | `qa/` |
+
+**Never read `examples/workout-plan/index.html` whole** (about 42k tokens). Search it for a specific pattern instead (`grep -n "restTimer" …`).
 
 ## Workflow
-
-### 1 · Decide the surface
-- **Interactive page or app** → start from [`templates/starter.html`](templates/starter.html) (vanilla) or follow [`docs/17-frameworks.md`](docs/17-frameworks.md) for React/Next, Tailwind and shadcn, or Vue.
-- **Printed document** (poster, guide, one-pager) → start from [`templates/print-a4.html`](templates/print-a4.html) and [`docs/11-print-and-pdf.md`](docs/11-print-and-pdf.md).
-- **Both** → share the copy dictionary and tokens; build the page first, then the print pages.
-
-### 2 · Wire the foundation
-```html
-<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400..700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="tokens/tokens.css">
-<link rel="stylesheet" href="css/halo.css">
-<script src="js/halo.js"></script>
-<script src="js/halo-sound.js"></script>   <!-- optional -->
-<script>Halo.init({ dict: { en:{…}, ckb:{…} } })</script>
-```
-Read [`docs/02-color.md`](docs/02-color.md) and [`docs/03-typography.md`](docs/03-typography.md) once.
-
-### 3 · Map the content to Halo's accents
-Pick at most three meanings and keep them for the whole product:
-- **green** = primary progress or done;
-- **cyan** = information, steps, calm;
-- **red** = recovery, attention, the outer ring;
-- amber = caution only.
-
-Write them down before building.
-
-### 4 · Build sections from components
-Each section: `.band > .wrap`, a `.head` with a two-line `h2`, then cards. Use the components exactly as documented in [`docs/05-components.md`](docs/05-components.md):
-- nav;
-- stat tile;
-- rings;
-- cards, with `.stack` for pinned footers;
-- chips, filters, segmented control and stepper;
-- check dots;
-- lists and sources;
-- KPI row and chart;
-- sheet (dialog), timer pill and toast.
-
-Hero pattern: `.split` with a headline (second line `.grad`), a lede and four `.stat` tiles on one side, and a feature card (rings and today's actions) on the other.
-
-### 5 · Balance every breakpoint
-Apply the five laptop techniques in [`docs/04-layout.md`](docs/04-layout.md):
-1. equal-height split;
-2. header row with a full-width tile grid;
-3. pinned footers;
-4. content that fills its card;
-5. ratios set by content.
-
-Then apply the phone rules in [`docs/07-phone-and-touch.md`](docs/07-phone-and-touch.md):
-- a quiet 40 px nav with at most 4 controls;
-- secondary settings in the menu;
-- swipe, haptics, safe areas.
-
-### 6 · Make it bilingual
-Put every string in the dictionary; never hard-code copy in markup. Follow [`docs/08-rtl-and-kurdish.md`](docs/08-rtl-and-kurdish.md):
-- logical properties only;
-- `<bdi>` around Latin terms inside Kurdish;
-- charts mirrored in code;
-- Sorani dates from the table;
-- Western digits by default.
-
-If you write Kurdish copy yourself, say so to the user and recommend a native review.
-
-### 7 · Add motion, light and sound
-- Rim light, reveals, progress hairline and hero drift come from `Halo.init()`. Tune nothing except durations, and only within [`docs/06-motion-and-light.md`](docs/06-motion-and-light.md).
-- Sound is optional. If used, wire only the named palette in [`docs/14-sound.md`](docs/14-sound.md), with a visible toggle (nav on desktop, menu on phone).
-
-### 8 · Icons
-- UI icons: Lucide.
-- Subject glyphs: 24 px stroke style in a `.tile`.
-- Action pictograms: follow the grammar in [`icons/README.md`](icons/README.md) (ghost start pose, ink end pose, one accent, knock-outs).
-
-### 9 · QA: try to break it
-Serve over http, then run:
-```bash
-python3 qa/qa_layout.py http://localhost:8000/your-page.html   # 9 widths × 2 themes × 2 languages
-python3 qa/qa_touch.py  http://localhost:8000/your-page.html   # phone touch, menu, reveal, glint
-```
-Add the product-specific interaction checks from [`docs/13-qa.md`](docs/13-qa.md), plus axe-core ([`docs/12-accessibility.md`](docs/12-accessibility.md)). Look at screenshots at 390 and 1440 in both themes before calling it done.
-
-### 10 · Print (when there is a document)
-HTML at the exact paper size → `scripts/print_pdf.py` → `qpdf` merge → `scripts/verify_pdf.sh` must report **0 images**. Embed TrueType (`.ttf`) fonts locally; CFF `.otf` fonts become Type 3 and break gradient text.
+1. **Brief.** Fill in `templates/brief.md`: who it's for, what they come back to check, the 1–3 hero numbers, the signature visual, accent meanings, illustration language, motion and sound intensity, surfaces, languages and sections. If the request is ambiguous, show the brief and ask one question; otherwise state it in a short paragraph and build.
+2. **Foundation.** Link `tokens/tokens.css`, `css/halo.css`, `js/halo.js` (plus `js/halo-sound.js` only if the brief has sound), and call `Halo.init({dict})`. Fonts: Google Sans + IBM Plex Sans Arabic ([`docs/03`](docs/03-typography.md)).
+3. **Compose sections** from the components in [`docs/05`](docs/05-components.md):
+   - Build the signature visual with existing pieces: `Halo.rings`, `Halo.spark`, `.meter` with a `.target` marker, `.bars`, `.timeline`, the status grid, or a typographic hero. Or invent one that follows the rules in `docs/00`.
+   - Replace all template content. If your page says "Close the rings" or "GPUs healthy" and the product isn't about that, you copied.
+4. **Balance** phone and laptop separately ([`docs/04`](docs/04-layout.md), [`docs/07`](docs/07-phone-and-touch.md)).
+5. **Bilingual:** every string goes in the dictionary, with RTL rules from [`docs/08`](docs/08-rtl-and-kurdish.md). If you write Kurdish yourself, tell the user and recommend a native review.
+6. **Motion and sound** at the intensity the brief chose ([`docs/06`](docs/06-motion-and-light.md), [`docs/14`](docs/14-sound.md)).
+7. **QA**, served over http:
+   ```bash
+   python3 qa/qa_layout.py http://localhost:8000/page.html    # 9 widths × 2 themes × 2 languages
+   python3 qa/qa_touch.py  http://localhost:8000/page.html    # phone touch suite
+   ```
+   Add the product's own interaction checks and axe-core. Review screenshots at 390 and 1440 in both themes.
+8. **Print** if needed: HTML → `scripts/print_pdf.py` → `qpdf` merge → `scripts/verify_pdf.sh` (0 images). Embed `.ttf` fonts.
 
 ## Pre-delivery checklist
-- [ ] No hex codes or easing curves outside `tokens.css`.
-- [ ] Dark and light both reviewed; text accents use `--XT`.
-- [ ] Laptop: no column ends ~40 px short of its neighbour; buttons align across rows; charts fill their cards.
-- [ ] Phone: ≤ 4 nav controls, 44 px targets, no sideways scroll at 320.
-- [ ] RTL: `dir`/`lang` set, chevrons flip, timers counter-clockwise, `<bdi>` around Latin terms.
-- [ ] Reduced motion honoured; sound has a toggle and is never the only signal.
-- [ ] Every factual claim links to a source; destructive actions have Undo.
-- [ ] `qa_layout.py` and `qa_touch.py` pass; no console errors.
-- [ ] PDFs (if any) verified vector.
+- [ ] A brief exists, and the signature visual fits the product (not rings by default, not copied content).
+- [ ] At most three accent meanings, used consistently; text accents use `--XT`.
+- [ ] No colour literals outside tokens; no logo the user didn't supply.
+- [ ] Laptop: balanced columns, aligned footers, charts fill their cards. Phone: ≤ 4 nav controls, 44 px targets, no sideways scroll at 320.
+- [ ] RTL: `dir`/`lang`, flipped chevrons, mirrored charts, `<bdi>` around Latin terms and Latin units.
+- [ ] Reduced motion honoured; sound (if any) has a toggle and is never the only signal.
+- [ ] Sources linked for factual claims; Undo for destructive actions.
+- [ ] `qa_layout.py` and `qa_touch.py` pass; no console errors; PDFs verified vector.
+
+## Reproducibility
+- `make setup` installs pinned dependencies (`requirements.txt`) and Chromium.
+- `make check` validates the skill itself: links, tokens in sync, no stray colours, no logos, JS syntax, frontmatter.
+- `make qa` tests every template and the example; `make assets` re-renders the README images; `make tokens` rebuilds the DTCG JSON.
+- CI runs the same in `.github/workflows/qa.yml`.
 
 ## File map
 | Path | What |
 |---|---|
-| `tokens/` | `tokens.css` (source of truth) + DTCG 2025.10 JSON (`halo.light`, `halo.dark`, `halo.base`) |
-| `css/halo.css` | All components, motion, phone and RTL rules |
-| `js/halo.js` | Runtime: store, i18n, theme, nav, light, reveal, drift, swipe, haptic, dialog, toast, timer, rings, icons |
-| `js/halo-sound.js` | Synthesized calm sound palette (Web Audio) |
-| `templates/` | `starter.html` (every pattern), `print-a4.html` (vector print page) |
-| `icons/` | UI icons, glyphs, pictograms, grammar, gallery |
-| `docs/` | 01 principles · 02 colour · 03 type · 04 layout · 05 components · 06 motion · 07 phone · 08 RTL · 09 icons · 10 data viz · 11 print · 12 a11y · 13 QA · 14 sound · 15 Figma · 16 libraries · 17 frameworks |
-| `qa/` | Layout and touch test suites (Playwright) |
-| `scripts/` | `print_pdf.py`, `verify_pdf.sh`, `build_tokens.py`, `render_assets.py` |
-| `fonts/` | IBM Plex Sans Arabic and Inter (TrueType, OFL) for offline and print use |
-| `examples/workout-plan/` | The full reference product: interactive site + 4 vector PDFs (EN/KU × dark/light) |
+| `docs/00-creative-direction.md` | **Read first.** Brief, signature visual catalogue, accent meanings, illustration language, anti-patterns |
+| `templates/brief.md` | The brief to fill in |
+| `templates/starter.html` | Personal-app mechanics: split hero, rings, tasks, timer, sheet, sound |
+| `templates/dashboard.html` | Data/ops mechanics: status grid, sparklines, meters with targets, live updates, still motion |
+| `templates/print-a4.html` | Vector print page |
+| `tokens/` | `tokens.css` (source of truth) + DTCG 2025.10 JSON |
+| `css/halo.css` · `js/halo.js` · `js/halo-sound.js` | Components · runtime · calm sound |
+| `icons/` | UI icons (Lucide grid), glyphs, pictogram grammar + gallery |
+| `docs/01–17` | Principles, colour, type, layout, components, motion, phone, RTL, icons, data viz, print, a11y, QA, sound, Figma, libraries, frameworks |
+| `qa/` · `scripts/` | Test suites · print, verify, tokens, assets, self-check |
+| `fonts/` | IBM Plex Sans Arabic + Inter (TTF, OFL) for offline, CI and print |
+| `examples/workout-plan/` | One complete product made with Halo (site + 4 vector PDFs). Reference only. |

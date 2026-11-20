@@ -5,6 +5,10 @@ Halo charts are few and plain: a ring, a bar or meter, a line. Each one repeats 
 ## Choose the form
 | Question | Form | Halo piece |
 |---|---|---|
+| What is the value now, and which way is it heading? | Big number + sparkline | `.stat` + `Halo.spark` |
+| How healthy are many similar units? | Status grid (tile per unit: chip, meter, sparkline) | see `templates/dashboard.html` |
+| Am I within budget or limit? | Meter with target marker | `.meter` + `.target` |
+| What is my rhythm over weeks? | Heat strip: 7 × n cells, one accent ramp (track → X2 → X) | grid of cells |
 | How close am I to today's goal? | Ring (one per goal, max 3, concentric) | `Halo.rings` |
 | How far through a sequence? | Meter / segmented bar | `.meter`, `.timeline`, `.pbar` dots |
 | How did it change over weeks? | Line with a dashed goal line | SVG in `.fig` |

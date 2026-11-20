@@ -1,8 +1,11 @@
 # 01 · Principles
 
-Halo is a design system for calm, glossy, data-forward interfaces: Apple-Fitness clarity, ring metrics, rim-lit cards, and quiet motion. It is bilingual by design (English + Kurdish Sorani, and so any RTL script) and it ships as tokens, CSS, a small runtime, and rules.
+Halo is a design system for calm, glossy, data-forward interfaces: Apple-Fitness clarity, rim-lit cards, big honest numbers and quiet motion. It's a way of designing, not a theme: every product gets its own signature visual, accent meanings and illustrations ([00-creative-direction.md](00-creative-direction.md)). It is bilingual by design (English + Kurdish Sorani, and so any RTL script) and it ships as tokens, CSS, a small runtime, and rules.
 
-These eight principles decide every case the docs don't cover.
+These principles decide every case the docs don't cover.
+
+## 0. Design per product
+Before any markup, write the brief and choose the signature visual for *this* product. The fixed rules below are what make it Halo; everything else is yours to invent. Copying the starter's or the example's content is a failure, not a shortcut.
 
 ## 1. Platform first, proven library second, invention never
 Reach for the web platform before anything else (`<dialog>`, `light-dark()`, IntersectionObserver, Web Audio, Intl). If the platform is not enough, use the library the industry already relies on for that exact job. See [16-libraries.md](16-libraries.md). Do not write a new animation engine, smooth scroller, icon set or synthesizer from memory. Halo's own code is small, readable and already tested; extend it, don't replace it.
@@ -31,4 +34,4 @@ Nothing is done until it has passed the QA protocol in [13-qa.md](13-qa.md): no 
 ---
 
 ### The Halo look in one paragraph (give this to a designer)
-Black or soft-grey page. No logo: the product name in bold type is the brand. Rounded cards (22 px) with a 1 px hairline rim and a barely-there vertical gradient. Big bold sans headlines with tight tracking, the second line in a green→cyan gradient. Three accents only: **green** (strength, done, primary progress), **cyan** (steps, information, calm), **pink-red** (recovery, attention, the outer ring), plus amber for warnings. Concentric activity rings. Chips are solid pills. Icons sit in soft gradient tiles. On hover a thin light runs along the card edge toward your cursor.
+Black or soft-grey page. No logo: the product name in bold type is the brand. Rounded cards (22 px) with a 1 px hairline rim and a barely-there vertical gradient. Big bold sans headlines with tight tracking, the second line in a green→cyan gradient. Three accent families (green, cyan, pink-red) plus amber for warnings, with meanings chosen per product. One signature visual per product: rings for daily goals, a big number with a sparkline for money, a status grid for fleets, a path for courses, and so on. Chips are solid pills. Icons sit in soft gradient tiles. On hover a thin light runs along the card edge toward your cursor.

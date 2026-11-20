@@ -33,7 +33,9 @@ Every component below is in `css/halo.css`; the behaviour, where there is any, i
 ```
 Grey label, big accent number, plain sub-line. Four of them in a `.g2.keep` grid is the classic hero block.
 
-## Activity rings
+## Activity rings (one of several signature visuals)
+Use rings only when the product is about closing 1–3 daily goals. Otherwise pick another signature visual ([00](00-creative-direction.md)).
+
 `Halo.rings(specs, size)` returns concentric SVG rings; `Halo.setRing(svg, key, p)` animates one.
 ```js
 Halo.rings([{k:'move',r:100,w:26,c:'red',track:'R'},{k:'ex',r:70,w:26,c:'green',track:'G'},{k:'stand',r:40,w:26,c:'cyan',track:'C'}],226)
@@ -41,6 +43,18 @@ Halo.rings([{k:'move',r:100,w:26,c:'red',track:'R'},{k:'ex',r:70,w:26,c:'green',
 - Stroke width 26 on a 226 box; gap between rings = stroke width + 4.
 - Track = `--trackX`; arc = `--X2 → --X` gradient, round caps, starting at 12 o'clock.
 - p = 0 hides the arc (no dot at 12 o'clock); p ≥ 0.999 draws 0.9999 so the cap still shows.
+
+## Sparkline
+`Halo.spark(values, {accent, w, h, label})` returns a small SVG trend line with a soft area fill and a dot on the latest value. It scales to its box (`.spark` is 100 % wide, 36 px tall) and mirrors in RTL. Put it under a big number (`.stat`), or in each tile of a status grid.
+
+## Meter with target
+```html
+<div class="meter cyan"><i style="width:62%"></i><span class="target" style="--t:90%"></span></div>
+```
+Variants: default green, `.cyan`, `.red`, `.amber`. `.target` marks a budget or limit, positioned with `--t` (logical, so it mirrors in RTL).
+
+## Status grid
+A `.grid.g4` of compact `.card` tiles, each with a name and status chip, a value row, a meter and a sparkline. It's the signature visual for fleets, servers, devices and stores. Live values update in place (re-render the content and keep the cards); never re-run reveals on live data. See `templates/dashboard.html`.
 
 ## Buttons
 | Class | Use |
@@ -52,7 +66,7 @@ Halo.rings([{k:'move',r:100,w:26,c:'red',track:'R'},{k:'ex',r:70,w:26,c:'green',
 Hover lifts 1 px (pointer devices only); press scales to 0.96.
 
 ## Chips
-`.chip` (outline) and `.chip.green | .red | .cyan` (filled). They are for status and quantities ("3 × 8–12", "Every night"), not for actions.
+`.chip` (outline) and `.chip.green | .red | .cyan | .amber` (filled). They are for status and quantities ("3 × 8–12", "Every night"), not for actions.
 
 ## Filters, segmented control, stepper
 - `.filters > button[aria-pressed]`: pill filters; the pressed one is ink-filled.

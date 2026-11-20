@@ -72,6 +72,19 @@
   --ease:   cubic-bezier(.2,.8,.2,1);                               /* Halo's only curve */
   --focus:  light-dark(#0071E3,#5BDCFF);
 
+  /* ---- utility colours used by components (keep every literal colour in this file) ---- */
+  --on-accent: light-dark(#FFFFFF,#000000);                        /* ink on a vivid accent fill (ticked dots, checks) */
+  --ic-ko2:  light-dark(#FFEBEF,#222227);                          /* knock-out on red-family pictogram tiles */
+  --sheet:   light-dark(#FFFFFF,#141416);                          /* dialog sheet surface */
+  --nav-bg:  light-dark(rgba(245,245,247,.82),rgba(0,0,0,.72));    /* frosted nav */
+  --dash:    light-dark(rgba(0,0,0,.25),rgba(255,255,255,.3));     /* dashed outline of an empty dot */
+  --field-rim:light-dark(rgba(0,0,0,.18),rgba(255,255,255,.22));   /* input border */
+  --scrim:   rgba(0,0,0,.55);                                      /* dialog backdrop */
+  --sh-float:rgba(0,0,0,.25);                                      /* pill, toast */
+  --sh-seg:  rgba(0,0,0,.12);                                      /* selected segment */
+  --sh-nav:  light-dark(rgba(0,0,0,.06),rgba(0,0,0,.5));           /* nav once scrolled */
+  --sh-lift: light-dark(rgba(0,0,0,.10),rgba(0,0,0,.6));           /* lit card */
+
   /* ---- shape + layout ---- */
   --r:      22px;     /* card radius */
   --r-sm:   14px;     /* nested tiles, inputs */

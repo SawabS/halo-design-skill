@@ -4,3 +4,4 @@ node_modules/
 out/
 *.log
 docs/assets/src/raw/
+.server.pid

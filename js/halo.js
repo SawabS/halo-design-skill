@@ -148,6 +148,16 @@ H.rings=(specs,size)=>{const c=size/2;let defs='',o='';
 H.setRing=(svg,k,p)=>{const a=svg&&svg.querySelector(`.arc[data-k="${k}"]`);if(!a)return;p=Math.max(0,Math.min(1,p));const C=2*Math.PI*a.r.baseVal.value;
   a.setAttribute('opacity',p<=0?'0':'1');a.setAttribute('stroke-dashoffset',(C*(1-(p>=.999?.9999:p))).toFixed(2))};
 
+/* ---------- sparkline: a tiny trend line with a soft area, mirrored in RTL ----------
+   Halo.spark([3,5,4,8,7], {accent:'cyan', w:120, h:36})  → SVG string (scales to its box) */
+let sid=0;
+H.spark=(vals,{accent='cyan',w=120,h=36,area=true,label=''}={})=>{if(!vals||vals.length<2)return'';const R=H.i18n.isRTL(),mn=Math.min(...vals),mx=Math.max(...vals),pad=3;
+  const X=i=>{const x=pad+i/(vals.length-1)*(w-2*pad);return R?w-x:x},Y=v=>h-pad-(mx===mn?.5:(v-mn)/(mx-mn))*(h-2*pad);
+  const pts=vals.map((v,i)=>X(i).toFixed(1)+','+Y(v).toFixed(1)).join(' '),id='halo-sp'+(++sid),last=vals.length-1;
+  return `<svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" role="img" aria-label="${H.esc(label)}"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--${accent});stop-opacity:.28"/><stop offset="1" style="stop-color:var(--${accent});stop-opacity:0"/></linearGradient></defs>`+
+    (area?`<polygon points="${X(0).toFixed(1)},${h} ${pts} ${X(last).toFixed(1)},${h}" fill="url(#${id})"/>`:'')+
+    `<polyline points="${pts}" fill="none" style="stroke:var(--${accent})" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/><circle cx="${X(last).toFixed(1)}" cy="${Y(vals[last]).toFixed(1)}" r="2.6" style="fill:var(--${accent})"/></svg>`};
+
 /* ---------- UI icons (Lucide-compatible 24px, 2px stroke) ---------- */
 H.icons={
   sun:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>',

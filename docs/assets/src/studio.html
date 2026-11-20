@@ -122,6 +122,17 @@ body{background:transparent;margin:0;padding:40px;display:grid;gap:40px;justify-
   <div class="phone" style="left:1140px;top:120px;width:320px"><img src="raw/example_phone_dark.png"></div>
 </div>
 
+<!-- ================= SHOWCASE: adaptation ================= -->
+<div data-asset="showcase-adapt" class="dark glowbg" style="width:1600px;height:900px">
+  <div class="abs kick" style="left:70px;top:44px">One system, different products · same grammar, different signature visual</div>
+  <div class="win rim" style="left:70px;top:96px;width:720px;--mx:80%"><img src="raw/starter_dark_en.png"></div>
+  <div class="abs label" style="left:70px;top:568px;font-size:14px">Personal app · rings for three daily goals</div>
+  <div class="win rim" style="left:810px;top:96px;width:720px;--mx:20%"><img src="raw/dashboard_dark_en.png"></div>
+  <div class="abs label" style="left:810px;top:568px;font-size:14px">Ops dashboard · status grid, sparklines, still motion</div>
+  <div class="win" style="left:70px;top:610px;width:720px;height:250px"><img src="raw/dashboard_light_en_grid.png" style="margin-top:-60px"></div>
+  <div class="win" style="left:810px;top:610px;width:720px;height:250px"><img src="raw/dashboard_light_ckb.png"></div>
+</div>
+
 <!-- ================= PRINT ================= -->
 <div data-asset="showcase-print" class="dark glowbg" style="width:1600px;height:1000px">
   <div class="abs kick" style="left:70px;top:44px">Vector PDF · 0 raster images · embedded fonts · live source links</div>
@@ -145,10 +156,14 @@ body{background:transparent;margin:0;padding:40px;display:grid;gap:40px;justify-
 </div>
 
 <div data-asset="feature-rings" class="tile2">
-  <div class="k tone-green">NUMBERS FIRST</div><div class="t">Rings that repeat the number.</div>
-  <div class="d">Big accent numbers with a grey label above and a plain sentence below. Rings and bars show the same value, never replace it.</div>
-  <div class="vis"><div style="display:grid;grid-template-columns:200px 150px;gap:18px;align-items:center"><div id="ringsA"></div>
-    <div style="display:grid;gap:14px"><div><div class="label">Move</div><div style="font-size:26px;font-weight:700" class="tone-red">50/90</div></div><div><div class="label">Tasks</div><div style="font-size:26px;font-weight:700" class="tone-green">3/6</div></div><div><div class="label">Breaks</div><div style="font-size:26px;font-weight:700" class="tone-cyan">2/4</div></div></div></div></div>
+  <div class="k tone-green">SIGNATURE VISUALS</div><div class="t">Designed per product.</div>
+  <div class="d">The agent writes a brief and picks the device that fits: rings for daily goals, a sparkline for money, a meter for budgets, a grid for fleets.</div>
+  <div class="vis"><div style="display:grid;grid-template-columns:150px 170px;gap:14px;align-items:stretch">
+    <div class="card" style="padding:12px;display:grid;place-items:center" id="sigRings"></div>
+    <div class="card stat" style="padding:12px"><div class="label">Balance</div><div class="v tone-green" style="font-size:24px">$4,820</div><div id="sigSpark"></div></div>
+    <div class="card" style="padding:12px"><div class="label">Budget · food</div><div style="font-weight:700;font-size:18px" class="tone-amber">82%</div><div class="meter amber mt8"><i style="width:82%"></i><span class="target" style="--t:90%"></span></div></div>
+    <div class="card" style="padding:12px"><div class="label">GPU 07</div><div class="row between" style="margin-top:2px"><b style="font-size:18px">91%</b><span class="chip amber" style="min-height:22px;font-size:11px">Hot</span></div><div id="sigSpark2"></div></div>
+  </div></div>
 </div>
 
 <div data-asset="feature-bilingual" class="tile2">
@@ -229,7 +244,9 @@ body{background:transparent;margin:0;padding:40px;display:grid;gap:40px;justify-
 <script src="../../../js/halo.js"></script>
 <script>
 
-document.getElementById('ringsA').innerHTML=Halo.rings([{k:'a',r:100,w:26,c:'red',track:'R',p:.56},{k:'b',r:70,w:26,c:'green',track:'G',p:.5},{k:'c',r:40,w:26,c:'cyan',track:'C',p:.5}],226);
+document.getElementById('sigRings').innerHTML=Halo.rings([{k:'a',r:100,w:26,c:'red',track:'R',p:.56},{k:'b',r:70,w:26,c:'green',track:'G',p:.72},{k:'c',r:40,w:26,c:'cyan',track:'C',p:.5}],226).replace('class="rings"','class="rings" style="width:118px"');
+document.getElementById('sigSpark').innerHTML=Halo.spark([30,34,31,38,36,42,40,47,45,52],{accent:'green'});
+document.getElementById('sigSpark2').innerHTML=Halo.spark([60,72,65,80,76,88,84,91],{accent:'amber'});
 
 /* sound: pentatonic music-box notes climbing + a singing-bowl decay */
 (()=>{const s=document.getElementById('soundViz');let g='<defs><linearGradient id="sg" x1="0" x2="1"><stop offset="0" style="stop-color:var(--heroA)"/><stop offset="1" style="stop-color:var(--heroB)"/></linearGradient></defs>';

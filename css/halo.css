@@ -68,7 +68,7 @@ p{margin:0}
 .tile svg{width:28px;height:28px}
 .pic{width:104px;height:104px;border-radius:24px;background:linear-gradient(var(--eA),var(--eB));border:1px solid var(--rim);padding:6px;flex:none}
 .pic svg{width:100%;height:100%;display:block}
-.pic.red{background:linear-gradient(var(--sA),var(--sB));--ic-ko:light-dark(#FFEBEF,#222227);--ic-acc:var(--ic-acc2)}
+.pic.red{background:linear-gradient(var(--sA),var(--sB));--ic-ko:var(--ic-ko2);--ic-acc:var(--ic-acc2)}
 .stat{padding:14px 14px 12px}
 .stat .v{font-size:clamp(24px,3vw,32px);font-weight:700;letter-spacing:-.03em;line-height:1.15;white-space:nowrap;margin-top:4px}
 .stat .s{font-size:13px;color:var(--ink2);margin-top:2px}
@@ -92,6 +92,7 @@ p{margin:0}
 .chip.green{background:var(--chipG);color:var(--chipGt);border-color:transparent}
 .chip.red{background:var(--chipR);color:var(--chipRt);border-color:transparent}
 .chip.cyan{background:var(--chipC);color:var(--chipCt);border-color:transparent}
+.chip.amber{background:color-mix(in srgb,var(--amber) 20%,transparent);color:var(--amberT);border-color:transparent}
 /* filter pills (aria-pressed) */
 .filters{display:flex;gap:6px;flex-wrap:wrap}
 .filters button{min-height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--rim);background:var(--card);cursor:pointer;font-weight:650;font-size:14px}
@@ -99,7 +100,7 @@ p{margin:0}
 /* segmented control */
 .seg{display:inline-flex;background:var(--bg);border-radius:12px;padding:3px;gap:2px}
 .seg button{min-height:38px;padding:0 14px;border-radius:10px;border:0;background:transparent;cursor:pointer;font-weight:700}
-.seg button[aria-pressed=true]{background:var(--card);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.seg button[aria-pressed=true]{background:var(--card);box-shadow:0 1px 3px var(--sh-seg)}
 /* stepper  ( − value + ) */
 .stepper{display:inline-flex;align-items:center;gap:4px;background:var(--card);border:1px solid var(--rim);border-radius:999px;padding:3px}
 .stepper output{min-width:96px;text-align:center;font-weight:700;white-space:nowrap}
@@ -110,11 +111,11 @@ p{margin:0}
 .nudge button{width:44px;height:44px;border-radius:12px;border:1px solid var(--rim);background:var(--bg2);font-weight:700;cursor:pointer;font-size:14px}
 /* check dots (tick-able sets / steps) */
 .dots{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.dot{width:44px;height:44px;border-radius:14px;border:1.5px dashed light-dark(rgba(0,0,0,.25),rgba(255,255,255,.3));background:transparent;cursor:pointer;font-weight:700;font-size:14px;color:var(--ink3);display:grid;place-items:center;transition:background .2s,transform .2s var(--ease)}
-.dot[aria-pressed=true]{background:var(--green);border:1.5px solid transparent;color:light-dark(#fff,#000)}
+.dot{width:44px;height:44px;border-radius:14px;border:1.5px dashed var(--dash);background:transparent;cursor:pointer;font-weight:700;font-size:14px;color:var(--ink3);display:grid;place-items:center;transition:background .2s,transform .2s var(--ease)}
+.dot[aria-pressed=true]{background:var(--green);border:1.5px solid transparent;color:var(--on-accent)}
 .dot:active{transform:scale(.92)}
 /* fields */
-input[type=number],input[type=date],input[type=text],input[type=email],select,textarea{font-size:16px;min-height:44px;padding:8px 12px;border-radius:12px;border:1px solid light-dark(rgba(0,0,0,.18),rgba(255,255,255,.22));background:var(--bg2);width:100%}
+input[type=number],input[type=date],input[type=text],input[type=email],select,textarea{font-size:16px;min-height:44px;padding:8px 12px;border-radius:12px;border:1px solid var(--field-rim);background:var(--bg2);width:100%}
 input[type=range]{width:100%;accent-color:var(--green);min-height:44px}
 label.f{display:grid;gap:6px;font-size:14px;font-weight:600;color:var(--ink2)}
 .unit{display:flex;align-items:center;gap:8px}.unit span{font-size:14px;color:var(--ink3);white-space:nowrap}
@@ -123,8 +124,8 @@ label.f{display:grid;gap:6px;font-size:14px;font-weight:600;color:var(--ink2)}
 .err{color:var(--redT);font-weight:650;min-height:1.5em;font-size:14px}
 
 /* ---------- 6. navigation ---------- */
-.nav{position:sticky;top:0;z-index:40;background:light-dark(rgba(245,245,247,.82),rgba(0,0,0,.72));backdrop-filter:saturate(1.6) blur(18px);-webkit-backdrop-filter:saturate(1.6) blur(18px);border-bottom:1px solid var(--sep);transition:box-shadow .4s,background .4s}
-.nav.scrolled{box-shadow:0 1px 0 var(--sep),0 8px 24px light-dark(rgba(0,0,0,.06),rgba(0,0,0,.5))}
+.nav{position:sticky;top:0;z-index:40;background:var(--nav-bg);backdrop-filter:saturate(1.6) blur(18px);-webkit-backdrop-filter:saturate(1.6) blur(18px);border-bottom:1px solid var(--sep);transition:box-shadow .4s,background .4s}
+.nav.scrolled{box-shadow:0 1px 0 var(--sep),0 8px 24px var(--sh-nav)}
 .nav .wrap{display:flex;align-items:center;gap:10px;min-height:var(--nav-h)}
 .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;text-decoration:none;color:var(--ink);white-space:nowrap;margin-inline-end:auto}
 .brand img,.brand svg{width:30px;height:30px}   /* only if the product already owns a mark; Halo never supplies one */
@@ -158,9 +159,15 @@ label.f{display:grid;gap:6px;font-size:14px;font-weight:600;color:var(--ink2)}
 .rings .arc{transition:stroke-dashoffset .9s cubic-bezier(.3,.8,.2,1)}
 .meter{height:10px;border-radius:99px;background:var(--trackG);overflow:hidden}
 .meter i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--green2),var(--green));transition:width .5s var(--ease)}
+.meter{position:relative}
+.meter.cyan{background:var(--trackC)}.meter.cyan i{background:linear-gradient(90deg,var(--cyan2),var(--cyan))}
+.meter.red{background:var(--trackR)}.meter.red i{background:linear-gradient(90deg,var(--red2),var(--red))}
+.meter.amber{background:color-mix(in srgb,var(--amber) 18%,transparent)}.meter.amber i{background:linear-gradient(90deg,var(--amber2),var(--amber))}
+.meter .target{position:absolute;top:0;bottom:0;width:2px;inset-inline-start:var(--t,80%);background:var(--ink);opacity:.55}   /* budget / limit marker */
+.spark{display:block;width:100%;height:36px;overflow:visible}
 .timeline{display:flex;gap:4px;margin-top:14px}.timeline div{height:14px;border-radius:7px}
 .bars{display:grid;grid-template-columns:repeat(var(--n,7),minmax(0,1fr));gap:8px;align-items:end;height:130px}
-.bars div{display:grid;align-content:end;justify-items:center;gap:4px;height:100%;font-size:13px;font-weight:700}
+.bars div{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;height:100%;font-size:13px;font-weight:700}   /* flex column: % heights on <i> resolve */
 .bars i{display:block;width:100%;max-width:30px;border-radius:8px}
 .bars span{color:var(--ink3);font-weight:600}
 .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
@@ -177,7 +184,7 @@ label.f{display:grid;gap:6px;font-size:14px;font-weight:600;color:var(--ink2)}
 @media(min-width:760px){.checks.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.checks.tiles li{background:var(--well);border:1px solid var(--rim);border-radius:16px;padding:14px 16px}}
 @media(min-width:1000px){.checks.tiles{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .chk{width:22px;height:22px;border-radius:50%;background:var(--green);display:grid;place-items:center;margin-top:3px}
-.chk svg{width:13px;height:13px;stroke:light-dark(#fff,#000)}
+.chk svg{width:13px;height:13px;stroke:var(--on-accent)}
 .list{list-style:none;margin:0;padding:0}
 .list li{display:grid;grid-template-columns:minmax(0,1fr) auto 44px;gap:10px;align-items:center;padding:6px 0;border-bottom:1px solid var(--sep)}
 .sources{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 28px;counter-reset:s}
@@ -193,24 +200,22 @@ footer.foot p{color:var(--ink3);font-size:14px}
 
 /* ---------- 8. overlays: sheet dialog, timer pill, toast ---------- */
 dialog.sheet{border:0;padding:0;background:transparent;color:var(--ink);max-width:min(560px,calc(100vw - 24px));width:100%;max-height:calc(100dvh - 24px)}
-dialog.sheet::backdrop{background:rgba(0,0,0,.55);backdrop-filter:blur(4px)}
-dialog.sheet>.body{background:var(--card2);border:1px solid var(--rim);border-radius:var(--r-lg);padding:20px;max-height:calc(100dvh - 24px);overflow:auto}
-:root[data-theme=dark] dialog.sheet>.body{background:#141416}
-@media (prefers-color-scheme:dark){:root:not([data-theme=light]) dialog.sheet>.body{background:#141416}}
+dialog.sheet::backdrop{background:var(--scrim);backdrop-filter:blur(4px)}
+dialog.sheet>.body{background:var(--sheet);border:1px solid var(--rim);border-radius:var(--r-lg);padding:20px;max-height:calc(100dvh - 24px);overflow:auto}
 dialog.sheet:has(.pill:not([hidden]))>.body{padding-bottom:88px}
 .sheet .hd{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
 .sheet .hd h3{font-size:22px}
 .timer{position:relative;width:180px;height:180px}
 .timer svg{width:100%;height:100%;transform:rotate(-90deg)}
 .timer output{position:absolute;inset:0;display:grid;place-items:center;font-size:44px;font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-.pill{position:fixed;z-index:60;inset-inline:0;bottom:max(16px,env(safe-area-inset-bottom,0px));margin:0 auto;width:max-content;max-width:calc(100vw - 24px);display:flex;align-items:center;gap:8px;padding:8px;border-radius:999px;background:var(--ink);color:var(--bg);box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.pill{position:fixed;z-index:60;inset-inline:0;bottom:max(16px,env(safe-area-inset-bottom,0px));margin:0 auto;width:max-content;max-width:calc(100vw - 24px);display:flex;align-items:center;gap:8px;padding:8px;border-radius:999px;background:var(--ink);color:var(--bg);box-shadow:0 10px 30px var(--sh-float)}
 .pill[hidden]{display:none}
 .pill .ring{width:40px;height:40px}
 .pill output{font-weight:700;font-size:20px;font-variant-numeric:tabular-nums;min-width:56px;text-align:center}
 .pill button{min-height:40px;min-width:44px;border-radius:999px;border:0;background:color-mix(in srgb,var(--bg) 16%,transparent);color:var(--bg);font-weight:700;cursor:pointer;padding:0 12px}
 .pill .lbl{font-weight:700;font-size:14px;padding-inline:4px}
 @media(max-width:420px){.pill .lbl{display:none}}
-.toast{position:fixed;z-index:70;inset-inline:0;top:calc(var(--nav-h) + 8px + env(safe-area-inset-top,0px));margin:0 auto;width:max-content;max-width:calc(100vw - 24px);display:flex;gap:12px;align-items:center;padding:10px 12px 10px 16px;border-radius:16px;background:var(--ink);color:var(--bg);font-weight:650;font-size:15px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.toast{position:fixed;z-index:70;inset-inline:0;top:calc(var(--nav-h) + 8px + env(safe-area-inset-top,0px));margin:0 auto;width:max-content;max-width:calc(100vw - 24px);display:flex;gap:12px;align-items:center;padding:10px 12px 10px 16px;border-radius:16px;background:var(--ink);color:var(--bg);font-weight:650;font-size:15px;box-shadow:0 10px 30px var(--sh-float)}
 .toast[hidden]{display:none}
 .toast button{min-height:36px;border-radius:10px;border:0;background:color-mix(in srgb,var(--bg) 18%,transparent);color:var(--bg);font-weight:700;padding:0 12px;cursor:pointer}
 
@@ -227,7 +232,7 @@ dialog.sheet:has(.pill:not([hidden]))>.body{padding-bottom:88px}
 .card::after{inset:0;z-index:-1;background:radial-gradient(520px circle at var(--mx,50%) var(--my,0%),var(--glow),transparent 55%)}
 .card.lit::before,.card.lit::after{opacity:1}
 @media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
-  .card.lit{box-shadow:0 2px 4px var(--shc),0 22px 50px light-dark(rgba(0,0,0,.10),rgba(0,0,0,.6))}
+  .card.lit{box-shadow:0 2px 4px var(--shc),0 22px 50px var(--sh-lift)}
   .card.tilt.lit{transform:perspective(1100px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(-3px)}
 }
 @media (hover:none){.card.lit{transform:scale(.992);transition:transform .25s var(--ease)}}
@@ -259,7 +264,10 @@ dialog.sheet:has(.pill:not([hidden]))>.body{padding-bottom:88px}
 :root[dir=rtl] h1{font-size:clamp(38px,5.6vw,66px)}
 :root[dir=rtl] .grad,:root[dir=rtl] .scroll-progress{background-image:linear-gradient(270deg,var(--heroA),var(--heroB))}
 :root[dir=rtl] .scroll-progress{transform-origin:right}
-:root[dir=rtl] .meter i{background:linear-gradient(270deg,var(--green2),var(--green))}
+:root[dir=rtl] .meter i{background-image:linear-gradient(270deg,var(--green2),var(--green))}
+:root[dir=rtl] .meter.cyan i{background-image:linear-gradient(270deg,var(--cyan2),var(--cyan))}
+:root[dir=rtl] .meter.red i{background-image:linear-gradient(270deg,var(--red2),var(--red))}
+:root[dir=rtl] .meter.amber i{background-image:linear-gradient(270deg,var(--amber2),var(--amber))}
 :root[dir=rtl] .ext::after{content:"↖"}
 :root[dir=rtl] .timer svg{transform:rotate(-90deg) scaleY(-1)}   /* ring runs counter-clockwise */
 :root[dir=rtl] [data-flip-rtl]{transform:scaleX(-1)}           /* chevrons, arrows */

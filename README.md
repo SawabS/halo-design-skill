@@ -16,8 +16,8 @@
 </p>
 
 <p align="center">
-  <b>Calm, glossy, bilingual interfaces that feel alive.</b><br>
-  Activity rings · rim-lit cards · quiet motion · calm synthesized sound · English and Kurdish (RTL) · phone to laptop · true vector PDF
+  <b>Calm, glossy, bilingual interfaces that feel alive, designed per product.</b><br>
+  Rim-lit cards · numbers first · a signature visual per product · quiet motion · calm synthesized sound · English and Kurdish (RTL) · phone to laptop · true vector PDF
 </p>
 
 <p align="center">
@@ -36,7 +36,8 @@
 
 AI agents can produce a lot of UI fast, and much of it looks the same: generic cards, random gradients, layouts that break on phones and ignore right-to-left languages. **Halo** gives an agent a complete, opinionated design system *and the rules for applying it*, so every screen it builds:
 
-- **looks deliberate**: three accents, one easing curve, numbers as the headline;
+- **fits its product**: the agent writes a short brief and picks the signature visual, accent meanings and illustrations for *this* app, so a finance tool, a course and a server dashboard each look like themselves;
+- **looks deliberate**: three accent roles, one easing curve, numbers as the headline;
 - **feels alive**: light follows the pointer, cards arrive once, timers chime softly;
 - **works for everyone**: dark and light, English and Kurdish, 320 px to 1440 px, keyboard and screen readers;
 - **is built on standards**: web-platform APIs first, then the production library that is already the standard for each job; nothing invented from memory;
@@ -47,7 +48,7 @@ AI agents can produce a lot of UI fast, and much of it looks the same: generic c
 <table>
   <tr>
     <td width="50%"><a href="docs/06-motion-and-light.md"><img alt="Rim light that follows your hand" src="docs/assets/feature-rim-light.png"></a></td>
-    <td width="50%"><a href="docs/10-data-viz.md"><img alt="Rings that repeat the number" src="docs/assets/feature-rings.png"></a></td>
+    <td width="50%"><a href="docs/00-creative-direction.md"><img alt="Signature visuals designed per product" src="docs/assets/feature-rings.png"></a></td>
   </tr>
   <tr>
     <td><a href="docs/08-rtl-and-kurdish.md"><img alt="Right-to-left is first class" src="docs/assets/feature-bilingual.png"></a></td>
@@ -67,12 +68,33 @@ AI agents can produce a lot of UI fast, and much of it looks the same: generic c
 |---|---|
 | **Tokens** | One `tokens.css` written with `light-dark()`, plus [DTCG 2025.10](https://www.designtokens.org/tr/2025.10/) JSON for Figma, Style Dictionary and native apps |
 | **Components** | Nav with scroll progress, stat tiles, activity rings, cards with pinned footers, chips, filters, segmented control, stepper, check dots, KPI row, charts, sources list, sheet dialog, timer pill, toast |
-| **Runtime** | `halo.js`, no dependencies: theme, i18n, nav, rim light, reveals, drift, swipe, haptics, dialogs, toast, timer, rings, icons |
+| **Creative direction** | A design brief, a signature-visual catalogue, accent-meaning and illustration rules, worked briefs for finance, ops, courses and research |
+| **Runtime** | `halo.js`, no dependencies: theme, i18n, nav, rim light, reveals, drift, swipe, haptics, dialogs, toast, timer, rings, sparklines, icons |
+| **Templates** | `starter.html` (personal app) · `dashboard.html` (ops / data) · `print-a4.html` (vector print) · `brief.md` |
 | **Sound** | `halo-sound.js`: music box, singing bowl, water drops and a breathing pad, synthesized with Web Audio in D major pentatonic |
 | **Icons** | Lucide-compatible UI icons, glyphs, and a pictogram grammar for "explain a movement" illustrations |
 | **Print** | HTML → vector PDF: zero raster images, vector shadows, RTL auto-fit, a verifier |
 | **QA** | Playwright suites for layout (9 widths × 2 themes × 2 languages) and phone touch |
+| **Reproducible** | Pinned `requirements.txt`, a `Makefile`, a self-check (`make check`) and a GitHub Actions workflow that runs everything |
 | **Docs** | 17 short files, one concern each, written for agents *and* people |
+
+## One system, many products
+
+<p align="center"><img alt="A personal app with rings and an ops dashboard with a status grid, both built with Halo" src="docs/assets/showcase-adapt.png" width="100%"></p>
+
+Halo fixes the *grammar*: tokens, type, motion, accessibility, bilingual layout and QA. The *character* is invented per product. Before writing markup, the agent fills in a ten-line [brief](templates/brief.md) and chooses a **signature visual** from the [catalogue](docs/00-creative-direction.md):
+
+| The user checks… | Signature visual |
+|---|---|
+| progress toward a few daily goals | rings |
+| a value and its trend | big number + sparkline |
+| a budget or a limit | meter with a target marker |
+| a path through steps | segmented progress / timeline |
+| many similar units' health | status grid |
+| comparisons | bars with values |
+| reading or reference | a typographic hero |
+
+The two templates show the range: [`starter.html`](templates/starter.html) (a personal app with rings, a timer, a sheet and sound) and [`dashboard.html`](templates/dashboard.html) (an ops screen with a status grid, sparklines, meters with targets, live data and still motion; no rings, no sound).
 
 ## Bilingual from the first line
 
@@ -112,7 +134,14 @@ The agent loads [`SKILL.md`](SKILL.md) when a task matches, or when you ask for 
 
 **Codex, Cursor, Windsurf and other agents:** point them at [`SKILL.md`](SKILL.md); an [`AGENTS.md`](AGENTS.md) is included for tools that look for one.
 
-**By hand:** serve the repo (`python3 -m http.server`) and open `templates/starter.html`.
+**By hand:** serve the repo (`python3 -m http.server`) and open `templates/starter.html` or `templates/dashboard.html`.
+
+**Verify your clone** (the same steps CI runs):
+```bash
+make setup      # pinned Python deps + Chromium (needs poppler-utils and qpdf from your package manager)
+make check      # links, tokens in sync, no colour literals, no logos, JS syntax, EN/KU dictionaries
+make qa         # layout + touch suites on both templates and the example
+```
 
 ## Quick start
 ```html
@@ -178,11 +207,14 @@ tokens/               tokens.css + DTCG JSON (light, dark, base)
 css/halo.css          components, motion, phone, RTL, print
 js/halo.js            runtime (no dependencies)
 js/halo-sound.js      calm synthesized sound
-templates/            starter.html · print-a4.html
+templates/            brief.md · starter.html · dashboard.html · print-a4.html
 icons/                ui · glyphs · pictograms · grammar · gallery
 docs/                 01–17, one concern per file · assets/ (these images + studio source)
 qa/                   qa_layout.py · qa_touch.py
-scripts/              print_pdf.py · verify_pdf.sh · build_tokens.py · render_assets.py
+scripts/              check_skill.py · print_pdf.py · verify_pdf.sh · build_tokens.py · render_assets.py
+Makefile              setup · check · qa · assets · tokens · pdf-verify · all
+requirements.txt      pinned Python dependencies
+.github/workflows/    CI running make check, make qa, make pdf-verify
 fonts/                IBM Plex Sans Arabic + Inter (TrueType, OFL)
 examples/workout-plan the reference product: site + 4 vector PDFs
 ```
@@ -190,6 +222,7 @@ examples/workout-plan the reference product: site + 4 vector PDFs
 ## Docs
 | | | |
 |---|---|---|
+| [**00 Creative direction**](docs/00-creative-direction.md) | | |
 | [01 Principles](docs/01-principles.md) | [07 Phone & touch](docs/07-phone-and-touch.md) | [13 QA](docs/13-qa.md) |
 | [02 Colour](docs/02-color.md) | [08 RTL & Kurdish](docs/08-rtl-and-kurdish.md) | [14 Sound](docs/14-sound.md) |
 | [03 Typography](docs/03-typography.md) | [09 Icons](docs/09-icons.md) | [15 Figma](docs/15-figma.md) |
@@ -200,8 +233,7 @@ examples/workout-plan the reference product: site + 4 vector PDFs
 ## Regenerating these images
 Every image in this README is rendered from live Halo pages, so it stays true to the code:
 ```bash
-python3 -m http.server 8766          # from the repo root
-python3 scripts/render_assets.py     # captures + renders docs/assets/*.png
+make assets                          # starts a local server, captures pages, renders docs/assets/*.png
 ```
 The source is [`docs/assets/src/studio.html`](docs/assets/src/studio.html): each `[data-asset]` element is one image.
 
@@ -211,7 +243,7 @@ Issues and pull requests are welcome, especially:
 - new pictograms that follow the grammar;
 - framework recipes.
 
-Please run `qa/qa_layout.py` and `qa/qa_touch.py` on anything you change.
+Please run `make all` before opening a pull request; CI runs the same steps.
 
 ## Licence
 - Code and docs: [MIT](LICENSE).

@@ -1,0 +1,5 @@
+# Pinned for reproducible QA, asset rendering and PDF printing (Python 3.10+)
+playwright==1.63.0
+pypdf==6.17.0
+fonttools==4.67.0
+# System tools (install with your package manager): poppler-utils (pdftoppm, pdfimages, pdffonts), qpdf. Optional: node ≥ 18 for JS checks.

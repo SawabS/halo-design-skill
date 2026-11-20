@@ -45,6 +45,11 @@ async def capture(b):
     await shot(b, S, "starter_dark_ckb", 1440, 900, "dark", "ckb", prep=pill)
     for lang, th in [("en", "dark"), ("ckb", "light"), ("en", "light"), ("ckb", "dark")]:
         await shot(b, S, f"phone_{lang}_{th}", 390, 844, th, lang, touch=True, dpr=3, prep=pill)
+    D = "/templates/dashboard.html"
+    await shot(b, D, "dashboard_dark_en", 1440, 900, "dark", "en")
+    await shot(b, D, "dashboard_light_ckb", 1440, 900, "light", "ckb")
+    await shot(b, D, "dashboard_light_en_grid", 1440, 900, "light", "en", scroll="#units")
+    await shot(b, D, "phone_dashboard_dark", 390, 844, "dark", "en", touch=True, dpr=3)
     await shot(b, E, "example_dark_en", 1440, 900, "dark", "en", ns="swp:")
     await shot(b, E, "example_light_ckb", 1440, 900, "light", "ckb", ns="swp:")
     await shot(b, E, "example_workout_dark", 1440, 900, "dark", "en", ns="swp:", scroll="#workout")

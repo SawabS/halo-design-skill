@@ -703,6 +703,149 @@
         "hex": "#5BDCFF"
       },
       "$description": "Focus ring"
+    },
+    "on-accent": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "alpha": 1,
+        "hex": "#000000"
+      }
+    },
+    "ic-ko2": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.1333,
+          0.1333,
+          0.1529
+        ],
+        "alpha": 1,
+        "hex": "#222227"
+      }
+    },
+    "sheet": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.0784,
+          0.0784,
+          0.0863
+        ],
+        "alpha": 1,
+        "hex": "#141416"
+      }
+    },
+    "nav-bg": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "alpha": 0.72,
+        "hex": "#000000"
+      }
+    },
+    "dash": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "alpha": 0.3,
+        "hex": "#FFFFFF"
+      }
+    },
+    "field-rim": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "alpha": 0.22,
+        "hex": "#FFFFFF"
+      }
+    },
+    "sh-nav": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "alpha": 0.5,
+        "hex": "#000000"
+      }
+    },
+    "sh-lift": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "alpha": 0.6,
+        "hex": "#000000"
+      }
+    },
+    "scrim": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "alpha": 0.55,
+        "hex": "#000000"
+      }
+    },
+    "sh-float": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "alpha": 0.25,
+        "hex": "#000000"
+      }
+    },
+    "sh-seg": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "alpha": 0.12,
+        "hex": "#000000"
+      }
     }
   }
 }

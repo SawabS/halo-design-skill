@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Halo Dashboard · Cluster status</title>
+<meta name="color-scheme" content="light dark">
+<!--
+  A second Halo product in a different domain, showing how the system adapts (docs/00-creative-direction.md):
+  brief → "GPU cluster status". Hero = health count; signature visual = status grid with meters and sparklines;
+  accents: green = healthy, amber = hot, red = down, cyan = info; illustration: none; motion: still (data updates
+  in place, nothing re-animates); sound: not loaded. No rings, no pictograms, no logo.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400..700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens/tokens.css">
+<link rel="stylesheet" href="../css/halo.css">
+<style>
+  .hero{display:grid;gap:28px}
+  @media(min-width:900px){.hero{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);align-items:end;gap:44px}}
+  .kpi .v{white-space:nowrap}
+  #h1{font-size:clamp(38px,4.6vw,60px)}
+  .kpi .spark{margin-top:8px}
+  .unit{display:grid;gap:10px;padding:16px}
+  .unit .row{flex-wrap:nowrap}
+  .unit h3{font-size:16px}
+  .unit .num{font-weight:700;font-size:14px;white-space:nowrap}
+  .unit .meta{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--ink3)}
+  .ev{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--sep)}
+  .ev:last-child{border-bottom:0}
+  .ev time{font-size:13px;color:var(--ink3);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .ev p{font-size:15px;color:var(--ink2)}
+  @media(max-width:520px){.ev{grid-template-columns:minmax(0,1fr) auto}.ev time{grid-column:1/-1}}
+  .trend{display:grid;gap:14px}
+  @media(min-width:900px){.trend{grid-template-columns:minmax(0,1.4fr) minmax(0,.6fr);align-items:stretch}.trend>.card{display:flex;flex-direction:column}.trend .fig{flex:1;min-height:260px;height:auto}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+<header class="nav"><div class="wrap">
+  <a class="brand" href="#status"><span data-i18n="brand">Cluster</span></a>
+  <nav class="links" aria-label="Sections"><a href="#status" data-i18n="nav.status">Status</a><a href="#units" data-i18n="nav.units">GPUs</a><a href="#trend" data-i18n="nav.trend">Trend</a><a href="#events" data-i18n="nav.events">Events</a></nav>
+  <div class="acts">
+    <button class="btn lang" type="button" data-lang-btn data-i18n="langBtn">کوردی</button>
+    <button class="btn ic" type="button" data-theme-btn></button>
+    <a class="gh" href="https://github.com/SawabS" target="_blank" rel="noopener" data-i18n-label="github"><span class="ghi"></span><span dir="ltr">GitHub</span></a>
+    <button class="btn ic" type="button" data-menu-btn aria-expanded="false" aria-controls="menu"></button>
+  </div></div>
+  <div class="menu" id="menu"><div class="wrap"><a href="#status" data-i18n="nav.status">Status</a><a href="#units" data-i18n="nav.units">GPUs</a><a href="#trend" data-i18n="nav.trend">Trend</a><a href="#events" data-i18n="nav.events">Events</a></div></div>
+</header>
+
+<main id="main">
+  <section id="status" class="band"><div class="wrap hero">
+    <div><div class="kicker"><b data-i18n="kicker">Live</b><span id="updated"></span></div>
+      <h1 id="h1"></h1>
+      <p class="lede" data-i18n="lede">Sixteen GPUs, two nodes, one model. Every tile updates in place every few seconds; nothing moves unless the data does.</p></div>
+    <div class="grid g2 keep" id="kpis"></div>
+  </div></section>
+
+  <section id="units" class="band"><div class="wrap">
+    <div class="head"><h2 data-i18n="unitsTitle">Every GPU.<br>At a glance.</h2><div class="filters" role="group" aria-label="Filter" id="filters"></div></div>
+    <div class="grid g4" id="grid"></div>
+  </div></section>
+
+  <section id="trend" class="band"><div class="wrap">
+    <div class="head"><h2 data-i18n="trendTitle">Throughput,<br>last 24 hours.</h2></div>
+    <div class="trend">
+      <div class="card"><div class="fig"><svg id="chart" role="img" aria-label="Tokens per second, last 24 hours"></svg></div></div>
+      <div class="card"><h3 data-i18n="byNode">By node</h3><div class="bars mt14" id="nodes" style="--n:2;height:200px"></div></div>
+    </div>
+  </div></section>
+
+  <section id="events" class="band"><div class="wrap">
+    <div class="head"><h2 data-i18n="eventsTitle">Events.</h2></div>
+    <div class="card" id="evList"></div>
+  </div></section>
+</main>
+<footer class="foot"><div class="wrap"><p data-i18n="footer">Halo dashboard template · simulated data.</p><a class="btn sm" href="#status" data-i18n="top">Back to top</a></div></footer>
+
+<script src="../js/halo.js"></script>
+<script>
+const DICT={
+ en:{skip:'Skip to content',brand:'Cluster','nav.status':'Status','nav.units':'GPUs','nav.trend':'Trend','nav.events':'Events',langBtn:'کوردی',github:'GitHub profile',
+  kicker:'Live',updated:'updated {s}s ago',h1a:'{n} / 16 GPUs healthy.',h1b:'All quiet.',h1bWarn:'{h} running hot.',
+  lede:'Sixteen GPUs, two nodes, one model. Every tile updates in place every few seconds; nothing moves unless the data does.',
+  node:'Node',util:'Utilisation',lat:'Latency p95',tps:'Throughput',mem:'Memory',ms:'ms',tokS:'tok/s',
+  unitsTitle:'Every GPU.\nAt a glance.',trendTitle:'Throughput,\nlast 24 hours.',eventsTitle:'Events.',byNode:'By node',
+  all:'All',hot:'Hot',down:'Down',healthy:'Healthy',temp:'°C',ack:'Acknowledge',acked:'Acknowledged.',undo:'Undo',
+  e1:'GPU 07 crossed 84 °C; fan curve raised.',e2:'Node B restarted vLLM worker (OOM at batch 64).',e3:'Model weights verified on all 16 GPUs.',
+  footer:'Halo dashboard template · simulated data.',top:'Back to top',menu:'Menu',close:'Close',toDark:'Switch to dark theme',toLight:'Switch to light theme'},
+ ckb:{skip:'بازدان بۆ ناوەڕۆک',brand:'کڵەستەر','nav.status':'دۆخ','nav.units':'GPUکان','nav.trend':'ئاراستە','nav.events':'ڕووداوەکان',langBtn:'English',github:'پرۆفایلی GitHub',
+  kicker:'ڕاستەوخۆ',updated:'{s} چرکە لەمەوبەر نوێکرایەوە',h1a:'{n} / 16 GPU ساغن.',h1b:'هەموو شت ئارامە.',h1bWarn:'{h} گەرم بووە.',
+  lede:'شازدە GPU، دوو گرێ، یەک مۆدێل. هەر خانەیەک چەند چرکە جارێک لە شوێنی خۆیدا نوێ دەبێتەوە؛ هیچ ناجووڵێت تا داتاکە نەگۆڕێت.',
+  node:'گرێی',util:'بەکارهێنان',lat:'دواکەوتنی p95',tps:'تێپەڕین',mem:'بیرگە',ms:'ms',tokS:'تۆکن/چرکە',
+  unitsTitle:'هەموو GPUیەک.\nبە یەک تەماشا.',trendTitle:'تێپەڕین،\n24 کاتژمێری ڕابردوو.',eventsTitle:'ڕووداوەکان.',byNode:'بەپێی گرێ',
+  all:'هەموو',hot:'گەرم',down:'وەستاو',healthy:'ساغ',temp:'°C',ack:'پشتڕاستکردنەوە',acked:'پشتڕاست کرایەوە.',undo:'گەڕانەوە',
+  e1:'GPU 07 لە 84 پلە تێپەڕی؛ خێرایی پانکە زیاد کرا.',e2:'گرێی B کارکەری vLLM ی دووبارە دەستپێکردەوە (بیرگە پڕ بوو لە batch 64).',e3:'کێشی مۆدێل لەسەر هەموو 16 GPU پشتڕاست کرایەوە.',
+  footer:'نموونەی داشبۆردی Halo · داتای وێنەیی.',top:'گەڕانەوە بۆ سەرەوە',menu:'لیست',close:'داخستن',toDark:'گۆڕین بۆ ڕووکاری تاریک',toLight:'گۆڕین بۆ ڕووکاری ڕووناک'}};
+
+const {$,$$,esc,t}=Halo;
+Halo.init({dict:DICT,reveal:'main h2, main .kicker, main .lede'});   /* still motion: reveal headings only, never live data */
+$('.ghi').outerHTML=Halo.icons.github;
+
+/* deterministic simulated data (seeded PRNG) so screenshots and tests are reproducible */
+let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+const N=16,hist=k=>Array.from({length:24},()=>k());
+const gpus=Array.from({length:N},(_,i)=>({id:i+1,node:i<8?'A':'B',util:60+rnd()*35,temp:58+rnd()*20,spark:hist(()=>50+rnd()*45),state:'ok'}));
+gpus[6].temp=86;gpus[6].state='hot';gpus[11].state='ok';
+const kp={util:hist(()=>70+rnd()*20),lat:hist(()=>180+rnd()*90),tps:hist(()=>9000+rnd()*3500),mem:hist(()=>72+rnd()*10)};
+const day=Array.from({length:48},(_,i)=>8000+Math.sin(i/6)*2200+rnd()*900);
+let events=[{k:'e1',lvl:'amber',m:2},{k:'e2',lvl:'red',m:38},{k:'e3',lvl:'green',m:95}],filt='all',age=0;
+
+const last=a=>a[a.length-1],fmt=(n,d=0)=>Halo.i18n.num(n,d);
+function stateOf(g){return g.state==='down'?'red':g.temp>=84?'amber':'green'}
+function render(){
+  const hot=gpus.filter(g=>stateOf(g)==='amber').length,ok=gpus.filter(g=>g.state!=='down').length;
+  $('#h1').innerHTML=`${esc(t('h1a',{n:ok}))}<br><span class="grad">${esc(hot?t('h1bWarn',{h:'GPU '+String(gpus.find(g=>stateOf(g)==='amber').id).padStart(2,'0')}):t('h1b'))}</span>`;
+  $('#updated').textContent=t('updated',{s:age});
+  $('#kpis').innerHTML=[['util',fmt(last(kp.util))+'%','cyan'],['lat',fmt(last(kp.lat))+' '+t('ms'),'amber'],['tps',fmt(last(kp.tps)/1000,1)+'k','green'],['mem',fmt(last(kp.mem))+'%','cyan']]
+    .map(([k,v,a])=>`<div class="card stat kpi"><div class="label">${esc(t(k))}</div><div class="v tone-${a}"><bdi dir="ltr">${esc(v)}</bdi></div>${Halo.spark(kp[k],{accent:a,label:t(k)})}</div>`).join('');
+  $('#filters').innerHTML=['all','hot','down'].map(f=>`<button type="button" data-f="${f}" aria-pressed="${f===filt}">${esc(t(f))}</button>`).join('');
+  $('#grid').innerHTML=gpus.map(g=>{const s=stateOf(g),show=filt==='all'||(filt==='hot'&&s==='amber')||(filt==='down'&&s==='red');
+    return `<article class="card unit" ${show?'':'hidden'}><div class="row between"><h3 dir="ltr">GPU ${String(g.id).padStart(2,'0')}</h3><span class="chip ${s}">${esc(t(s==='green'?'healthy':s==='amber'?'hot':'down'))}</span></div>
+    <div class="row between"><span class="label">${esc(t('util'))}</span><span class="num">${fmt(g.util)}%</span></div>
+    <div class="meter ${s==='green'?'cyan':s}"><i style="width:${g.util.toFixed(1)}%"></i><span class="target" style="--t:90%"></span></div>
+    ${Halo.spark(g.spark,{accent:s==='green'?'cyan':s,label:'GPU '+g.id})}
+    <div class="meta"><span>${esc(t('node'))} ${g.node}</span><span class="num" style="font-size:13px">${fmt(g.temp)}${t('temp')}</span></div></article>`}).join('');
+  $('#nodes').innerHTML=['A','B'].map(n=>{const v=gpus.filter(g=>g.node===n).reduce((a,g)=>a+g.util,0)/8;return `<div><b>${fmt(v)}%</b><i style="height:${v}%;background:linear-gradient(180deg,var(--cyan2),var(--cyan))"></i><span dir="ltr">${n}</span></div>`}).join('');
+  $('#evList').innerHTML=events.map((e,i)=>`<div class="ev"><time>${e.m} min</time><p><span class="chip ${e.lvl}" style="margin-inline-end:8px">${esc(t(e.lvl==='green'?'healthy':e.lvl==='amber'?'hot':'down'))}</span>${esc(t(e.k))}</p><button class="btn sm" type="button" data-ack="${i}">${esc(t('ack'))}</button></div>`).join('')||`<p class="mut">—</p>`;
+  $$('h2[data-i18n]').forEach(h=>h.innerHTML=esc(t(h.dataset.i18n)).replace('\n','<br>'));
+  draw()}
+function draw(){const s=$('#chart'),W=s.clientWidth,H=s.clientHeight;if(!W||!H)return;const R=Halo.i18n.isRTL(),ml=44,mr=12,mt=12,mb=26,mx=12000;
+  const X=i=>{const x=ml+i/(day.length-1)*(W-ml-mr);return R?W-x:x},Y=v=>mt+(1-v/mx)*(H-mt-mb);let g='';
+  for(const k of [0,4000,8000,12000])g+=`<line x1="${X(0)}" x2="${X(day.length-1)}" y1="${Y(k)}" y2="${Y(k)}" style="stroke:var(--sep)"/><text x="${R?W-ml+6:ml-6}" y="${Y(k)+4}" text-anchor="${R?'start':'end'}">${k/1000}k</text>`;
+  g+=`<polyline points="${day.map((v,i)=>X(i).toFixed(1)+','+Y(v).toFixed(1)).join(' ')}" fill="none" style="stroke:var(--green)" stroke-width="3" stroke-linejoin="round"/>`;s.innerHTML=g}
+new ResizeObserver(draw).observe($('#chart'));
+
+/* live updates: values change in place; no re-reveal, no layout shift */
+setInterval(()=>{age=(age+3)%60;gpus.forEach(g=>{if(g.state==='down')return;g.util=Math.max(20,Math.min(99,g.util+(rnd()-.5)*8));g.spark.push(g.util);g.spark.shift()});
+  for(const k in kp){const a=kp[k];a.push(a[a.length-1]*(0.97+rnd()*.06));a.shift()}render()},3000);
+
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.f){filt=b.dataset.f;render();return}
+  if(b.dataset.ack){const i=+b.dataset.ack,ev=events[i];events.splice(i,1);render();Halo.toast(t('acked'),{undo:()=>{events.splice(i,0,ev);render()}})}});
+Halo.i18n.onChange(render);
+render();
+</script>
+</body>
+</html>

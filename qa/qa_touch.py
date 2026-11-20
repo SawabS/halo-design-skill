@@ -50,11 +50,13 @@ async def run(b, url, css, w, h, lang, th, ns):
     await p.evaluate("scrollTo({top:0,behavior:'instant'})"); await p.wait_for_timeout(200)
     await p.locator(MENU).first.tap(); await p.wait_for_timeout(200)
     ok(await p.locator(".menu.open").count() > 0, f"{tag} menu opens by tap")
+    innerH = h
     links = p.locator(".menu a[href^='#']")
     target = await links.last.get_attribute("href")
     await links.last.tap(); await p.wait_for_timeout(1800)
     y = await p.evaluate(f"document.querySelector('{target}').getBoundingClientRect().top")
-    ok(abs(y) < 140 and await p.locator(".menu.open").count() == 0, f"{tag} menu link closes menu and scrolls to {target} ({round(y)})")
+    at_end = await p.evaluate("scrollY >= document.documentElement.scrollHeight - innerHeight - 2")   # short last section
+    ok((abs(y) < 140 or (at_end and y < innerH)) and await p.locator(".menu.open").count() == 0, f"{tag} menu link closes menu and scrolls to {target} ({round(y)})")
     H = await p.evaluate("document.documentElement.scrollHeight")
     for yy in range(0, H, 450):
         await p.evaluate(f"scrollTo({{top:{yy},behavior:'instant'}})"); await p.wait_for_timeout(60)

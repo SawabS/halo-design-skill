@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Regenerate DTCG 2025.10 colour token files from tokens/tokens.css (the source of truth).
-   python3 scripts/build_tokens.py        → tokens/halo.light.tokens.json, tokens/halo.dark.tokens.json"""
-import re, json, pathlib
+   python3 scripts/build_tokens.py          → tokens/halo.light.tokens.json, tokens/halo.dark.tokens.json
+   python3 scripts/build_tokens.py --check  → exit 1 if the JSON is out of sync with tokens.css"""
+import re, json, pathlib, sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 css = (ROOT / "tokens/tokens.css").read_text()
 SCHEMA = "https://www.designtokens.org/schemas/2025.10/format.json"
@@ -37,10 +38,19 @@ DESC = {"bg": "Page background", "bg2": "Inputs and wells", "card": "Flat card",
         "green": "Accent fill: strength, done", "greenT": "Text-safe green", "cyan": "Accent fill: steps, info", "cyanT": "Text-safe cyan",
         "red": "Accent fill: recovery, attention", "redT": "Text-safe red", "amber": "Accent fill: caution", "amberT": "Text-safe amber"}
 P = list(pairs())
+# single-value colours (same in both themes), e.g. --scrim: rgba(0,0,0,.55);
+for m in re.finditer(r"--([\w-]+):\s*(#[0-9A-Fa-f]{6}|rgba\([^)]*\))\s*;", css):
+    P.append((m.group(1), m.group(2), m.group(2)))
 for idx, name in ((1, "light"), (2, "dark")):
     out = {"$schema": SCHEMA, "$description": f"Halo colour tokens, {name} theme. Generated from tokens/tokens.css.", "color": {}}
     for p in P:
         out["color"][p[0]] = {"$type": "color", "$value": colour(p[idx])}
         if p[0] in DESC: out["color"][p[0]]["$description"] = DESC[p[0]]
-    (ROOT / f"tokens/halo.{name}.tokens.json").write_text(json.dumps(out, indent=2, ensure_ascii=False))
-print(f"{len(P)} colour tokens written")
+    target = ROOT / f"tokens/halo.{name}.tokens.json"
+    text = json.dumps(out, indent=2, ensure_ascii=False)
+    if "--check" in sys.argv:
+        if not target.exists() or target.read_text() != text:
+            print(f"OUT OF SYNC: {target.name} (run scripts/build_tokens.py)"); sys.exit(1)
+    else:
+        target.write_text(text)
+print(f"{len(P)} colour tokens " + ("in sync" if "--check" in sys.argv else "written"))
